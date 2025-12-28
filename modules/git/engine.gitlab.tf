@@ -64,8 +64,8 @@ module "gitlab_engine" {
     gitlab_group_access_token.access_tokens["release"],
     gitlab_project.engine
   ]
-  source     = "./gitlab"
-  project    = gitlab_project.engine.id
+  source  = "./gitlab"
+  project = gitlab_project.engine.id
 
   protected_branches = ["main"]
 

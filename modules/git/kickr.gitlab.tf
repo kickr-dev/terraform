@@ -64,8 +64,8 @@ module "gitlab_kickr" {
     gitlab_group_access_token.access_tokens["release"],
     gitlab_project.kickr
   ]
-  source     = "./gitlab"
-  project    = gitlab_project.kickr.id
+  source  = "./gitlab"
+  project = gitlab_project.kickr.id
 
   protected_branches = ["beta"]
 

@@ -64,8 +64,8 @@ module "gitlab_action-setup" {
     gitlab_group_access_token.access_tokens["release"],
     gitlab_project.action-setup
   ]
-  source     = "./gitlab"
-  project    = gitlab_project.action-setup.id
+  source  = "./gitlab"
+  project = gitlab_project.action-setup.id
 
   protected_branches = ["main"]
 

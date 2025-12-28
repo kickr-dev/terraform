@@ -13,8 +13,8 @@ resource "github_repository" "brand" {
   allow_rebase_merge = true
   allow_squash_merge = false
 
-  archive_on_destroy          = true
-  delete_branch_on_merge      = true
+  archive_on_destroy     = true
+  delete_branch_on_merge = true
   # web_commit_signoff_required = true
 
   vulnerability_alerts = true

@@ -14,8 +14,8 @@ resource "github_repository" "action-setup" {
   allow_rebase_merge = true
   allow_squash_merge = false
 
-  archive_on_destroy          = true
-  delete_branch_on_merge      = true
+  archive_on_destroy     = true
+  delete_branch_on_merge = true
   # web_commit_signoff_required = true
 
   topics = ["action-composite", "github-actions"]

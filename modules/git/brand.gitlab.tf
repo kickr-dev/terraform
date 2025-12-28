@@ -64,8 +64,8 @@ module "gitlab_brand" {
     gitlab_group_access_token.access_tokens["release"],
     gitlab_project.brand
   ]
-  source     = "./gitlab"
-  project    = gitlab_project.brand.id
+  source  = "./gitlab"
+  project = gitlab_project.brand.id
 
   protected_branches = ["main"]
 

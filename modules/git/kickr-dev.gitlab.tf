@@ -11,6 +11,9 @@ resource "gitlab_group" "kickr-dev" {
   visibility_level        = "public"
   wiki_access_level       = "disabled"
 
+  avatar      = "${path.module}/avatars/kickr.png"
+  avatar_hash = filesha256("${path.module}/avatars/kickr.png")
+
   auto_devops_enabled          = false
   permanently_remove_on_delete = false
   request_access_enabled       = false
@@ -26,8 +29,8 @@ resource "gitlab_group" "kickr-dev" {
   }
 
   push_rules {
-    branch_name_regex    = ""
-    commit_message_regex = ""
+    branch_name_regex    = local.branch_name_regexp
+    commit_message_regex = local.commit_message_regexp
 
     deny_delete_tag         = true
     prevent_secrets         = true
@@ -46,13 +49,13 @@ resource "gitlab_group_access_token" "access_tokens" {
       scopes       = ["api", "self_rotate", "write_repository"]
     }
     "release" = {
-      name         = "release[bot]"
+      name         = "kickr-release[bot]"
       description  = "Release token to create releases on GitLab, push commit(s) for version files and comment on issues and pull requests"
       access_level = "maintainer"
       scopes       = ["api", "self_rotate", "write_repository"]
     }
     "renovate" = {
-      name         = "renovate[bot]"
+      name         = "kickr-renovate[bot]"
       description  = "Renovate token to create branches and pull requests for versions maintainance purposes"
       access_level = "developer"
       scopes       = ["api", "self_rotate", "write_repository"]
@@ -132,8 +135,8 @@ resource "gitlab_group_service_account" "service_accounts" {
   depends_on = [gitlab_group.kickr-dev]
   for_each = {
     # "kickr"     = { name = "kickr[bot]", username = "kickr-dev.kickr.bot" }
-    # "renovate"  = { name = "renovate[bot]", username = "kickr-dev.renovate.bot" }
-    "terraform" = { name = "terraform[bot]", username = "kickr-dev.terraform.bot" }
+    # "renovate"  = { name = "kickr-renovate[bot]", username = "kickr-dev.renovate.bot" }
+    "terraform" = { name = "kickr-terraform[bot]", username = "kickr-dev.terraform.bot" }
   }
 
   group    = gitlab_group.kickr-dev.id
@@ -183,13 +186,13 @@ resource "gitlab_group_variable" "variables" {
       protected   = false
       value       = data.sops_file.sops["gitlab"].data["codecov_token"]
     },
-    # {
-    #   key         = "KICKR_TOKEN"
-    #   description = gitlab_group_access_token.access_tokens["kickr"].description
-    #   sensitive   = true
-    #   protected   = true
-    #   value       = gitlab_group_access_token.access_tokens["kickr"].token
-    # },
+    {
+      key         = "KICKR_TOKEN"
+      description = gitlab_group_access_token.access_tokens["kickr"].description
+      sensitive   = true
+      protected   = true
+      value       = gitlab_group_access_token.access_tokens["kickr"].token
+    },
     {
       key         = "RELEASE_TOKEN"
       description = gitlab_group_access_token.access_tokens["release"].description
@@ -210,4 +213,32 @@ resource "gitlab_group_variable" "variables" {
   raw               = true
   value             = sensitive(each.value.value)
   variable_type     = "env_var"
+}
+
+resource "gitlab_user_avatar" "tokens" {
+  depends_on = [
+    gitlab_group_access_token.access_tokens,
+    gitlab_group_service_account.service_accounts
+  ]
+  for_each = merge([
+    {
+      for name, token in gitlab_group_access_token.access_tokens : name => {
+        avatar  = "${name}.png"
+        token   = token.token
+        user_id = token.user_id
+      }
+    },
+    {
+      "terraform" = {
+        avatar  = "terraform.png"
+        token   = data.sops_file.sops["gitlab"].data["terraform_token"]
+        user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
+      }
+    }
+  ]...)
+
+  user_id     = each.value.user_id
+  token       = each.value.token
+  avatar      = "${path.module}/avatars/${each.value.avatar}"
+  avatar_hash = filesha256("${path.module}/avatars/${each.value.avatar}")
 }

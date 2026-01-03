@@ -10,7 +10,7 @@ resource "github_organization_settings" "kickr-dev" {
   default_repository_permission = "write"
   web_commit_signoff_required   = true
 
-  advanced_security_enabled_for_new_repositories               = true
+  advanced_security_enabled_for_new_repositories               = false # cannot be true it seems
   dependabot_alerts_enabled_for_new_repositories               = true
   dependabot_security_updates_enabled_for_new_repositories     = true
   dependency_graph_enabled_for_new_repositories                = true

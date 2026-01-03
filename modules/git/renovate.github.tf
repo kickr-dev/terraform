@@ -14,9 +14,9 @@ resource "github_repository" "renovate" {
   allow_rebase_merge = true
   allow_squash_merge = false
 
-  archive_on_destroy     = true
-  delete_branch_on_merge = true
-  # web_commit_signoff_required = true
+  archive_on_destroy          = true
+  delete_branch_on_merge      = true
+  web_commit_signoff_required = true
 
   topics = ["renovate", "renovate-configs", "shared-configuration"]
 

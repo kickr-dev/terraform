@@ -58,17 +58,6 @@ resource "gitlab_project" "renovate" {
   resolve_outdated_diff_discussions = false
 }
 
-resource "gitlab_pipeline_schedule" "renovate" {
-  project = gitlab_project.renovate.id
-
-  active         = true
-  cron           = "0 12 * * *"
-  cron_timezone  = "Europe/Paris"
-  description    = "Scheduled pipeline for Renovate maintainance"
-  ref            = "refs/heads/main"
-  take_ownership = true
-}
-
 module "gitlab_renovate" {
   depends_on = [
     github_repository.renovate,
@@ -85,6 +74,15 @@ module "gitlab_renovate" {
     token = sensitive(data.sops_file.sops["gitlab"].data["github_mirror_token"])
     url   = github_repository.renovate.http_clone_url
   }
+
+  schedules = [
+    {
+      cron        = "0 12 * * *"
+      description = "Scheduled pipeline for kickr layout updates and Renovate maintainance"
+      name        = "kickr-renovate"
+      ref         = "refs/heads/main"
+    }
+  ]
 
   variables = [
     {

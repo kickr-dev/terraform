@@ -9,6 +9,8 @@ ci:
     apply: manual
     environments:
       - production
+dependencies:
+  manager: renovate
 exclude:
   - shell
 license: mit

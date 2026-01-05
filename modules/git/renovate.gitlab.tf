@@ -94,14 +94,6 @@ module "gitlab_renovate" {
       value       = sensitive(data.sops_file.sops["gitlab"].data["github_com_token"])
     },
     {
-      key         = "GITLAB_TOKEN"
-      description = gitlab_group_access_token.access_tokens["release"].description
-      protected   = true
-      raw         = false
-      sensitive   = false
-      value       = "$${RELEASE_TOKEN}"
-    },
-    {
       key         = "RENOVATE_TOKEN"
       description = "Renovate token to create branches and pull requests for versions maintainance purposes"
       protected   = true

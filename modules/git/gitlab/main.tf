@@ -117,7 +117,7 @@ resource "gitlab_project_variable" "variables" {
 }
 
 resource "gitlab_tag_protection" "tags" {
-  project             = var.project
+  project = var.project
 
   create_access_level = "maintainer"
   tag                 = "*"

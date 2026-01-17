@@ -1,5 +1,3 @@
-provider "external" {}
-
 provider "github" {
   owner = "kickr-dev"
   token = data.sops_file.sops["github"].data["terraform_token"]

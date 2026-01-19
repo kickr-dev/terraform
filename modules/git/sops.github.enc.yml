@@ -1,6 +1,6 @@
 billing_email: ENC[AES256_GCM,data:BWAMJ8OXO4NJ9Yh8l0sOTyE=,iv:+ORWwOmy1U5HOPQSqBKbnlRHReS+0qS0220CDFFApJY=,tag:vlYVW6W6Cdcu0Ot9V0O7fA==,type:str]
 support_email: ENC[AES256_GCM,data:U7CUT5hSi84g6xHMQfoBj8Y=,iv:1/XHjOW5BY8CRcrfhdAXrNpZbQpO7kGNQNBRrdCiBb8=,tag:CbShAtYjwG7LiZHK0VVabg==,type:str]
-terraform_token: ENC[AES256_GCM,data:L56W9HO8qUJ2GxuPfZWb9CSCt4HUoXawB8/OW/6OMrk5ZXDobglpze07Z+zndqX8oTqDmR/WYTo1k+l8nG8aN/SGn4FI6cmEnHBpq4PlHMQB9ApbC2b7e+Yxuhky,iv:D+KX45uW7yAqPPUYjxq80jOGo1KKLE8URK0PzWRDTtk=,tag:6RpYkHitYuadMUv3y7sd1w==,type:str]
+terraform_token: ENC[AES256_GCM,data:9hRdqmYamRkjbQMG5wd/hjMrihOgnso30iL1Ko6di8CZyWF7zM71w2HaMxDWAGuaO6d9FAITndAiXowKFM9ep/wKxw8B948NWLAqkPSkNjiqnQyi7tq+2KkB2Ti2,iv:jpk6Of6IRjF2xQmPx6mr7qKhafYXVoh53dgfy8/J9W4=,tag:C2sFmMxt3t/UVBydhBiGiQ==,type:str]
 sops:
     age:
         - recipient: age1ug8mc4498j6c7a0ymtptu9gxecsk369zn24gx9q5gklrr5w74fjqkf5ug4
@@ -12,7 +12,7 @@ sops:
             dnl5YUJBVnc3ZzRoVUpQbWZXK2hJeTgKoff/Td6KMCFhdhwmwAIW97IPSvT7recr
             FerV4Y8imXMPgC5FFzl2CaKtCnuS/1IYsnoejWL+BA6pB6CtUatVtg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-12-28T11:06:40Z"
-    mac: ENC[AES256_GCM,data:nyMqU4PKdOMqmJD/r5LmlZjO0ouWO6L4AS2CA0eSiDebrAYAIn6fS3XqQLf9lIAldQxIZolQtGclX086LNCZ/FcZMlo3C+4P6aES69GfhePNzPS5/85QOk+vteyOERepuB18tFoStfHj/WogCnl/e3JX0DeQEr56gprFZIK+27o=,iv:I6P4LA4QLy0N7LH7G9JeblnVmY4U9lbykotDAmzgW68=,tag:ptbAWhgUnZaey1suXDMnbw==,type:str]
+    lastmodified: "2026-01-19T20:45:31Z"
+    mac: ENC[AES256_GCM,data:lOWzCYWB7jvMpWa/gLlm4N83TM0rMJhKAEEi6IY31ltaZ/XqIUlanCuKwB7+7W3KJrxB029610Z/BFWRtUZx9Oy+yOe6/ttIOZ0mDDJzpq72Z73jOFgbLrmyQxTyN1OYETtvhaiLENZBnkOpEwwtdh6Y1EXp+Zce1hxDba2rCtg=,iv:74pAVRtY0n4jQVJxpMJqaNtsCzmeZ6tOhHzqEYAkJSQ=,tag:toHGH1iRODAYkYzLfi3cYQ==,type:str]
     unencrypted_suffix: _unencrypted
     version: 3.11.0

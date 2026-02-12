@@ -28,7 +28,6 @@ module "gitlab_project_kickr" {
 module "gitlab_project_settings_kickr" {
   depends_on = [
     module.github_repository_kickr,
-    gitlab_group_access_token.access_tokens["release"],
     module.gitlab_project_kickr
   ]
   source  = "./gitlab_project_settings"

@@ -29,7 +29,6 @@ module "gitlab_project_renovate" {
 module "gitlab_project_settings_renovate" {
   depends_on = [
     module.github_repository_renovate,
-    gitlab_group_access_token.access_tokens["release"],
     gitlab_group_access_token.access_tokens["renovate"],
     module.gitlab_project_renovate
   ]

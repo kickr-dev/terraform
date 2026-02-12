@@ -28,7 +28,6 @@ module "gitlab_project_engine" {
 module "gitlab_project_settings_engine" {
   depends_on = [
     module.github_repository_engine,
-    gitlab_group_access_token.access_tokens["release"],
     module.gitlab_project_engine
   ]
   source  = "./gitlab_project_settings"

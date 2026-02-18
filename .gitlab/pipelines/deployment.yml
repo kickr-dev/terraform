@@ -20,6 +20,8 @@ variables:
   TF_STAGING_ENABLED: "false"
   TF_PROD_ENABLED: "true"
 
+  TF_TRIVY_ARGS: --disable-telemetry --skip-version-check . --ignorefile .trivyignore.yaml
+
 .tf-workspace:
   variables:
     TF_BASE_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state

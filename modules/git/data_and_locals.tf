@@ -10,11 +10,6 @@ locals {
 
   labels = [
     {
-      color       = "#B60205"
-      description = "This change is breaking"
-      name        = "breaking"
-    },
-    {
       color       = "#D73A4A"
       description = "Something isn't working"
       name        = "bug"

@@ -5,26 +5,21 @@ include:
 
   # Terraform template
   # https://gitlab.com/to-be-continuous/terraform
-  - project: to-be-continuous/terraform
-    ref: d58443583d11e1ef3ac279911501de126088caaa # 9.0.0
-    file: templates/gitlab-ci-terraform.yml
+  - component: gitlab.com/to-be-continuous/terraform/gitlab-ci-terraform@389159323d3d41b648d516828d9422e6c98fd661 # 9.2.1
+    inputs:
+      fmt-enabled: "true"
+      image: ghcr.io/opentofu/opentofu:latest
+      integ-enabled: "false"
+      prod-enabled: "true"
+      review-enabled: "false"
+      staging-enabled: "false"
+      trivy-args: --disable-telemetry --skip-version-check . --ignorefile $CI_PROJECT_DIR/.trivyignore.yaml
+      trivy-disabled: "true"
+      validate-enabled: "true"
+      gitlab-backend-disabled: "false"
+      environment-namespace: /modules-git
+      project-dir: modules/git
 
-variables:
-  TF_IMAGE: ghcr.io/opentofu/opentofu:latest
-
-  TF_FMT_ENABLED: "true"
-  TF_VALIDATE_ENABLED: "true"
-
-  TF_REVIEW_ENABLED: "false"
-  TF_INTEG_ENABLED: "false"
-  TF_STAGING_ENABLED: "false"
-  TF_PROD_ENABLED: "true"
-
-  TF_TRIVY_ARGS: --disable-telemetry --skip-version-check . --ignorefile .trivyignore.yaml
-
-.tf-workspace:
+.tf-base:
   variables:
-    TF_BASE_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state
-    # see https://gitlab.com/to-be-continuous/terraform/-/blob/master/templates/gitlab-ci-terraform.yml?ref_type=heads#L774
-    TF_ADDRESS: ${TF_BASE_ADDRESS}/ff76aae2.${CI_ENVIRONMENT_SLUG}
-    TF_PROJECT_DIR: modules/git
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state${TF_ENVIRONMENT_NAMESPACE}_${ENV_TYPE}

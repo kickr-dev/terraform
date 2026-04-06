@@ -47,7 +47,7 @@ resource "gitlab_project" "default" {
 
   build_git_strategy                          = "fetch"
   build_timeout                               = 900
-  ci_delete_pipelines_in_seconds              = 1296000 # 15d
+  ci_delete_pipelines_in_seconds              = 2592000 # 30d
   ci_forward_deployment_enabled               = true
   ci_forward_deployment_rollback_allowed      = true
   ci_pipeline_variables_minimum_override_role = "developer"

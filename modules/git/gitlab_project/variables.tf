@@ -38,11 +38,6 @@ variable "public_jobs" {
   default = true
 }
 
-variable "mirror" {
-  type    = string
-  default = ""
-}
-
 variable "analytics_access_level" {
   type    = string
   default = "enabled"

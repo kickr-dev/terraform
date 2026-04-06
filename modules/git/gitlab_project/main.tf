@@ -13,12 +13,6 @@ resource "gitlab_project" "default" {
   packages_enabled        = var.packages_enabled
   public_jobs             = var.public_jobs
 
-  import_url                          = var.mirror
-  mirror                              = var.mirror != ""
-  mirror_overwrites_diverged_branches = var.mirror != ""
-  mirror_trigger_builds               = var.mirror != ""
-  only_mirror_protected_branches      = var.mirror != ""
-
   analytics_access_level               = var.analytics_access_level
   builds_access_level                  = var.builds_access_level
   container_registry_access_level      = var.container_registry_access_level

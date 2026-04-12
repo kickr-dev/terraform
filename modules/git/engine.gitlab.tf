@@ -42,8 +42,8 @@ module "gitlab_project_settings_engine" {
 
   schedules = [
     {
-      active      = false
-      cron        = "0 12 * * *"
+      active      = true
+      cron        = "0 12 * * 3"
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"

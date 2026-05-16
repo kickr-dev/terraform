@@ -27,11 +27,6 @@ module "gitlab_project_renovate" {
 }
 
 module "gitlab_project_settings_renovate" {
-  depends_on = [
-    module.github_repository_renovate,
-    gitlab_group_access_token.access_tokens["renovate"],
-    module.gitlab_project_renovate
-  ]
   source  = "./gitlab_project_settings"
   project = module.gitlab_project_renovate.id
 
@@ -68,11 +63,11 @@ module "gitlab_project_settings_renovate" {
     },
     {
       key         = "RENOVATE_TOKEN"
-      description = "Renovate token to create branches and pull requests for versions maintainance purposes"
+      description = local.descriptions.renovate
       protected   = true
       raw         = true
       sensitive   = true
-      value       = sensitive(gitlab_group_access_token.access_tokens["renovate"].token)
+      value       = sensitive(gitlab_group_service_account_access_token.access_tokens["renovate"].token)
     }
   ]
 }

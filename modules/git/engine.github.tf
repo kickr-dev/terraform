@@ -11,8 +11,7 @@ module "github_repository_engine" {
 }
 
 module "github_repository_settings_engine" {
-  depends_on = [module.github_repository_engine]
-  source     = "./github_repository_settings"
+  source = "./github_repository_settings"
 
   repository = module.github_repository_engine.name
 

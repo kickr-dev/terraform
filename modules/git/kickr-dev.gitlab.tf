@@ -41,31 +41,24 @@ resource "gitlab_group" "kickr-dev" {
 }
 
 resource "gitlab_group_access_token" "access_tokens" {
-  depends_on = [gitlab_group.kickr-dev]
   for_each = {
-    "kickr" = {
-      name         = "kickr[bot]"
-      description  = "Kickr token to create branches and pull requests for kickr layout maintainance purposes"
-      access_level = "developer"
-      scopes       = ["api", "self_rotate", "write_repository"]
-    }
-    "release" = {
-      name         = "kickr-release[bot]"
-      description  = "Release token to create releases on GitLab, push commit(s) for version files and comment on issues and pull requests"
-      access_level = "maintainer"
-      scopes       = ["api", "self_rotate", "write_repository"]
-    }
-    "renovate" = {
-      name         = "kickr-renovate[bot]"
-      description  = "Renovate token to create branches and pull requests for versions maintainance purposes"
-      access_level = "developer"
-      scopes       = ["api", "self_rotate", "write_repository"]
-    }
-    # "terraform" = {
-    #   name         = "terraform[bot]"
-    #   description  = "Terraform GitLab token to apply resources"
-    #   access_level = "terraform"
-    #   scopes       = ["api", "self_rotate"]
+    # kickr = {
+    #   name         = "kickr[bot]"
+    #   description  = local.descriptions.kickr
+    #   access_level = "developer"
+    #   scopes       = ["api", "self_rotate", "write_repository"]
+    # }
+    # release = {
+    #   name         = "kickr-release[bot]"
+    #   description  = local.descriptions.release
+    #   access_level = "maintainer"
+    #   scopes       = ["api", "self_rotate", "write_repository"]
+    # }
+    # renovate = {
+    #   name         = "kickr-renovate[bot]"
+    #   description  = local.descriptions.renovate
+    #   access_level = "developer"
+    #   scopes       = ["api", "self_rotate", "write_repository"]
     # }
   }
 
@@ -78,14 +71,13 @@ resource "gitlab_group_access_token" "access_tokens" {
 
   rotation_configuration = {
     expiration_days    = 365
-    rotate_before_days = 15
+    rotate_before_days = 60
   }
 }
 
 resource "gitlab_group_label" "labels" {
-  depends_on = [gitlab_group.kickr-dev]
-  for_each   = { for label in local.labels : label.name => label }
-  group      = gitlab_group.kickr-dev.id
+  for_each = { for label in local.labels : label.name => label }
+  group    = gitlab_group.kickr-dev.id
 
   color       = each.value.color
   description = each.value.description
@@ -93,8 +85,7 @@ resource "gitlab_group_label" "labels" {
 }
 
 resource "gitlab_group_level_mr_approvals" "approvals" {
-  depends_on = [gitlab_group.kickr-dev]
-  group      = gitlab_group.kickr-dev.id
+  group = gitlab_group.kickr-dev.id
 
   allow_author_approval                              = true
   allow_committer_approval                           = true
@@ -104,17 +95,20 @@ resource "gitlab_group_level_mr_approvals" "approvals" {
 }
 
 resource "gitlab_group_membership" "memberships" {
-  depends_on = [gitlab_group_service_account.service_accounts]
   for_each = {
-    # "kickr" = {
-    #   user_id      = gitlab_group_service_account.service_accounts["kickr"].service_account_id
-    #   access_level = "developer"
-    # }
-    # "renovate" = {
-    #   user_id      = gitlab_group_service_account.service_accounts["renovate"].service_account_id
-    #   access_level = "developer"
-    # }
-    "terraform" = {
+    kickr = {
+      user_id      = gitlab_group_service_account.service_accounts["kickr"].service_account_id
+      access_level = "developer"
+    }
+    release = {
+      user_id      = gitlab_group_service_account.service_accounts["release"].service_account_id
+      access_level = "maintainer"
+    }
+    renovate = {
+      user_id      = gitlab_group_service_account.service_accounts["renovate"].service_account_id
+      access_level = "developer"
+    }
+    terraform = {
       user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
       # cannot have a custom role between Maintainer and Owner because there's no scope to rotate or create its own tokens
       # cannot be just a Group Access Token because a custom role cannot be assigned to that and Group Access Token(s) (even Owner) cannot rotate or create Group Access Token(s)
@@ -133,11 +127,11 @@ resource "gitlab_group_membership" "memberships" {
 }
 
 resource "gitlab_group_service_account" "service_accounts" {
-  depends_on = [gitlab_group.kickr-dev]
   for_each = {
-    # "kickr"     = { name = "kickr[bot]", username = "kickr-dev.kickr.bot" }
-    # "renovate"  = { name = "kickr-renovate[bot]", username = "kickr-dev.renovate.bot" }
-    "terraform" = { name = "kickr-terraform[bot]", username = "kickr-dev.terraform.bot" }
+    kickr     = { name = "kickr[bot]", username = "kickr.bot" }
+    release   = { name = "kickr-release[bot]", username = "kickr-dev.release.bot" }
+    renovate  = { name = "kickr-renovate[bot]", username = "kickr-dev.renovate.bot" }
+    terraform = { name = "kickr-terraform[bot]", username = "kickr-dev.terraform.bot" }
   }
 
   group    = gitlab_group.kickr-dev.id
@@ -146,23 +140,22 @@ resource "gitlab_group_service_account" "service_accounts" {
 }
 
 resource "gitlab_group_service_account_access_token" "access_tokens" {
-  depends_on = [gitlab_group_service_account.service_accounts]
   for_each = {
-    # "kickr" = {
-    #   user_id = gitlab_group_service_account.service_accounts["kickr"].service_account_id
-    #   name    = "kickr[bot]"
-    #   scopes  = ["api", "self_rotate", "write_repository"]
-    # }
-    # "renovate" = {
-    #   user_id = gitlab_group_service_account.service_accounts["renovate"].service_account_id
-    #   name    = "renovate[bot]"
-    #   scopes  = ["api", "self_rotate", "write_repository"]
-    # }
-    # "terraform" = {
-    #   user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
-    #   name    = "terraform[bot]"
-    #   scopes  = ["api", "self_rotate"]
-    # }
+    kickr = {
+      user_id = gitlab_group_service_account.service_accounts["kickr"].service_account_id
+      name    = "kickr[bot]"
+      scopes  = ["api", "self_rotate", "write_repository"]
+    }
+    release = {
+      user_id = gitlab_group_service_account.service_accounts["release"].service_account_id
+      name    = "kickr-renovate[bot]"
+      scopes  = ["api", "self_rotate", "write_repository"]
+    }
+    renovate = {
+      user_id = gitlab_group_service_account.service_accounts["renovate"].service_account_id
+      name    = "kickr-renovate[bot]"
+      scopes  = ["api", "self_rotate", "write_repository"]
+    }
   }
 
   group   = gitlab_group.kickr-dev.id
@@ -173,12 +166,11 @@ resource "gitlab_group_service_account_access_token" "access_tokens" {
 
   rotation_configuration = {
     expiration_days    = 365
-    rotate_before_days = 15
+    rotate_before_days = 60
   }
 }
 
 resource "gitlab_group_variable" "variables" {
-  depends_on = [gitlab_group_access_token.access_tokens]
   for_each = { for variable in [
     {
       key         = "CODECOV_TOKEN"
@@ -189,17 +181,17 @@ resource "gitlab_group_variable" "variables" {
     },
     {
       key         = "KICKR_TOKEN"
-      description = gitlab_group_access_token.access_tokens["kickr"].description
+      description = local.descriptions.kickr
       sensitive   = true
       protected   = true
-      value       = gitlab_group_access_token.access_tokens["kickr"].token
+      value       = gitlab_group_service_account_access_token.access_tokens["kickr"].token
     },
     {
       key         = "RELEASE_TOKEN"
-      description = gitlab_group_access_token.access_tokens["release"].description
+      description = local.descriptions.release
       sensitive   = true
       protected   = true
-      value       = gitlab_group_access_token.access_tokens["release"].token
+      value       = gitlab_group_service_account_access_token.access_tokens["release"].token
     }
   ] : variable.key => variable }
 
@@ -217,20 +209,23 @@ resource "gitlab_group_variable" "variables" {
 }
 
 resource "gitlab_user_avatar" "tokens" {
-  depends_on = [
-    gitlab_group_access_token.access_tokens,
-    gitlab_group_service_account.service_accounts
-  ]
   for_each = merge([
     {
-      for name, token in gitlab_group_access_token.access_tokens : name => {
+      for name, token in gitlab_group_access_token.access_tokens : "${name}:group_token" => {
         avatar  = "${name}.png"
         token   = token.token
         user_id = token.user_id
       }
     },
     {
-      "terraform" = {
+      for name, token in gitlab_group_service_account_access_token.access_tokens : "${name}:sa_token" => {
+        avatar  = "${name}.png"
+        token   = token.token
+        user_id = token.user_id
+      }
+    },
+    {
+      terraform = {
         avatar  = "terraform.png"
         token   = data.sops_file.sops["gitlab"].data["terraform_token"]
         user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id

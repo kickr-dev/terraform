@@ -14,7 +14,8 @@ variable "environments" {
       value       = string
     })), [])
   }))
-  default = []
+  default     = []
+  description = "List of environments to create in the GitLab project along with their CI/CD variables."
 }
 
 variable "labels" {
@@ -23,7 +24,8 @@ variable "labels" {
     color       = string
     description = string
   }))
-  default = []
+  default     = []
+  description = "List of labels to create in the GitLab project."
 }
 
 variable "mirror" {
@@ -31,17 +33,20 @@ variable "mirror" {
     token = string
     url   = string
   })
-  default  = null
-  nullable = true
+  default     = null
+  nullable    = true
+  description = "Pull mirror configuration to keep the GitLab project in sync with an upstream repository."
 }
 
 variable "project" {
-  type = string
+  type        = string
+  description = "The GitLab project ID or full path to configure."
 }
 
 variable "protected_branches" {
-  type    = set(string)
-  default = []
+  type        = set(string)
+  default     = []
+  description = "List of branch name patterns to protect in the GitLab project."
 }
 
 variable "schedules" {
@@ -57,7 +62,8 @@ variable "schedules" {
       value = string
     })), [])
   }))
-  default = []
+  default     = []
+  description = "List of pipeline schedules to create in the GitLab project."
 }
 
 variable "variables" {
@@ -69,5 +75,6 @@ variable "variables" {
     protected   = optional(bool, false)
     value       = string
   }))
-  default = []
+  default     = []
+  description = "List of CI/CD variables to create at the GitLab project level."
 }

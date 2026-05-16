@@ -26,10 +26,6 @@ module "gitlab_project_kickr" {
 }
 
 module "gitlab_project_settings_kickr" {
-  depends_on = [
-    module.github_repository_kickr,
-    module.gitlab_project_kickr
-  ]
   source  = "./gitlab_project_settings"
   project = module.gitlab_project_kickr.id
 

@@ -12,7 +12,6 @@ module "github_repository_terraform" {
 }
 
 module "github_repository_settings_terraform" {
-  depends_on = [module.github_repository_terraform]
   source     = "./github_repository_settings"
   repository = module.github_repository_terraform.name
 

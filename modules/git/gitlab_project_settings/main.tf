@@ -65,10 +65,9 @@ resource "gitlab_pipeline_schedule" "schedules" {
 }
 
 resource "gitlab_pipeline_schedule_variable" "variables" {
-  depends_on = [gitlab_pipeline_schedule.schedules]
   for_each = merge([
     for schedule in var.schedules : {
-      for variable in schedule.variables : "${schedule.name}-${variable.key}" => {
+      for variable in schedule.variables : "${schedule.name}:${variable.key}" => {
         key                  = variable.key
         pipeline_schedule_id = gitlab_pipeline_schedule.schedules[schedule.name].pipeline_schedule_id
         value                = variable.value

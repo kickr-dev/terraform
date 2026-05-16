@@ -27,10 +27,6 @@ module "gitlab_project_terraform" {
 }
 
 module "gitlab_project_settings_terraform" {
-  depends_on = [
-    module.github_repository_terraform,
-    module.gitlab_project_terraform
-  ]
   source  = "./gitlab_project_settings"
   project = module.gitlab_project_terraform.id
 

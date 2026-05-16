@@ -10,7 +10,6 @@ module "github_repository_renovate" {
 }
 
 module "github_repository_settings_renovate" {
-  depends_on = [module.github_repository_renovate]
   source     = "./github_repository_settings"
   repository = module.github_repository_renovate.name
 

@@ -1,6 +1,7 @@
 variable "actions_disabled" {
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
+  description = "Should GitHub Actions be enabled on this repository."
 }
 
 variable "environments" {
@@ -22,12 +23,14 @@ variable "environments" {
       value         = string
     })), [])
   }))
-  default = []
+  default     = []
+  description = "List of deployment environments to create on the repository, each with optional secrets (secret_name, plaintext_value, encrypted_value) and variables (variable_name, value)."
 }
 
 variable "default_branch" {
-  type    = string
-  default = "main"
+  type        = string
+  default     = "main"
+  description = "The branch (e.g. `main`) to set as the default branch of the repository."
 }
 
 variable "labels" {
@@ -36,7 +39,8 @@ variable "labels" {
     color       = string
     description = string
   }))
-  default = []
+  default     = []
+  description = "List of issue labels to create on the repository, each with a name, a 6 character hex color code (without leading #), and an optional description."
 }
 
 variable "protected_branches" {
@@ -44,11 +48,13 @@ variable "protected_branches" {
     name                          = string
     required_pull_request_reviews = optional(bool, false)
   }))
-  default = []
+  default     = []
+  description = "List of branch protection rules to apply on the repository, each identified by a pattern and with optional pull request review enforcement."
 }
 
 variable "repository" {
-  type = string
+  type        = string
+  description = "The GitHub repository name to apply settings to."
 }
 
 variable "secrets" {
@@ -58,7 +64,8 @@ variable "secrets" {
     encrypted_value = optional(string, null)
     plaintext_value = optional(string, null)
   }))
-  default = []
+  default     = []
+  description = "List of repository-level Actions secrets to create, each with a secret_name and one of plaintext_value or encrypted_value."
 }
 
 variable "variables" {
@@ -66,7 +73,8 @@ variable "variables" {
     variable_name = string
     value         = string
   }))
-  default = []
+  default     = []
+  description = "List of repository-level Actions variables to create, each with a variable_name and a value."
 }
 
 variable "webhook" {
@@ -74,6 +82,7 @@ variable "webhook" {
     secret = string
     url    = string
   })
-  default  = null
-  nullable = true
+  default     = null
+  nullable    = true
+  description = "Webhook configuration for the repository, with the target url and an optional shared secret."
 }

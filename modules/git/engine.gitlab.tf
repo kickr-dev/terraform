@@ -26,10 +26,6 @@ module "gitlab_project_engine" {
 }
 
 module "gitlab_project_settings_engine" {
-  depends_on = [
-    module.github_repository_engine,
-    module.gitlab_project_engine
-  ]
   source  = "./gitlab_project_settings"
   project = module.gitlab_project_engine.id
 

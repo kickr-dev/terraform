@@ -8,6 +8,12 @@ locals {
   branch_name_regex    = "^(alpha|beta|dev|develop|main|next|rc|staging|v[0-9]+(\\.[0-9]+)?\\.x|(chore|docs|feat|fix|kickr|release|renovate)\\/\\S+)$"
   commit_message_regex = ""
 
+  descriptions = {
+    kickr    = "Kickr token to create branches and pull requests for kickr layout maintainance purposes"
+    release  = "Release token to create releases on GitLab, push commit(s) for version files and comment on issues and pull requests"
+    renovate = "Renovate token to create branches and pull requests for versions maintainance purposes"
+  }
+
   labels = [
     {
       color       = "#D73A4A"

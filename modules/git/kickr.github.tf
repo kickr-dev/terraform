@@ -11,8 +11,7 @@ module "github_repository_kickr" {
 }
 
 module "github_repository_settings_kickr" {
-  depends_on = [module.github_repository_kickr]
-  source     = "./github_repository_settings"
+  source = "./github_repository_settings"
 
   repository = module.github_repository_kickr.name
 

@@ -47,7 +47,7 @@ module "gitlab_project_settings_terraform" {
   schedules = [
     {
       active      = true
-      cron        = "0 12 * * 3"
+      cron        = local.schedules.kickr
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"

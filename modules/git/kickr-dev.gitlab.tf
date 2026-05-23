@@ -177,7 +177,7 @@ resource "gitlab_group_variable" "variables" {
       description = "CodeCov access token for coverage analysis"
       sensitive   = true
       protected   = false
-      value       = data.sops_file.sops["gitlab"].data["codecov_token"]
+      value       = local.secrets.gitlab.codecov_token
     },
     {
       key         = "KICKR_TOKEN"
@@ -227,7 +227,7 @@ resource "gitlab_user_avatar" "tokens" {
     {
       terraform = {
         avatar  = "terraform.png"
-        token   = data.sops_file.sops["gitlab"].data["terraform_token"]
+        token   = local.secrets.gitlab.terraform_token
         user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
       }
     }

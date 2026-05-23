@@ -1,10 +1,10 @@
 provider "github" {
   owner = "kickr-dev"
-  token = data.sops_file.sops["github"].data["terraform_token"]
+  token = local.secrets.github.terraform_token
 }
 
 provider "gitlab" {
-  token = data.sops_file.sops["gitlab"].data["terraform_token"]
+  token = local.secrets.gitlab.terraform_token
 }
 
 provider "sops" {}

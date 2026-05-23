@@ -101,4 +101,22 @@ locals {
       name        = "wontfix"
     }
   ]
+
+  secrets = {
+    github = yamldecode(data.sops_file.sops["github"].raw)
+    gitlab = yamldecode(data.sops_file.sops["gitlab"].raw)
+  }
+}
+
+#####################################################
+#
+# Sops
+#
+#####################################################
+
+data "sops_file" "sops" {
+  for_each = toset(["github", "gitlab"])
+
+  source_file = "sops.${each.value}.enc.yml"
+  input_type  = "yaml"
 }

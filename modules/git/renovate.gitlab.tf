@@ -33,7 +33,7 @@ module "gitlab_project_settings_renovate" {
   protected_branches = ["main"]
 
   mirror = {
-    token = sensitive(data.sops_file.sops["gitlab"].data["github_mirror_token"])
+    token = sensitive(local.secrets.gitlab.github_mirror_token)
     url   = module.github_repository_renovate.http_clone_url
   }
 
@@ -59,7 +59,7 @@ module "gitlab_project_settings_renovate" {
       protected   = true
       raw         = true
       sensitive   = true
-      value       = sensitive(data.sops_file.sops["gitlab"].data["github_com_token"])
+      value       = sensitive(local.secrets.gitlab.github_com_token)
     },
     {
       key         = "RENOVATE_TOKEN"

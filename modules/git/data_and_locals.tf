@@ -15,8 +15,8 @@ locals {
   }
 
   schedules = {
-    renovate = "0 12 * * 3"
-    kickr    = "0 12 * * 4"
+    renovate = "0 12 * * 5"
+    kickr    = "0 12 * * 6"
   }
 
   labels = [

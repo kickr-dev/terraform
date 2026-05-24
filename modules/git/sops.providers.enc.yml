@@ -1,0 +1,17 @@
+github_terraform_token: ENC[AES256_GCM,data:MwzQtnFXKcGNo7FmjwfakmmvyCZGXtQkzPf6QBK4XGjbTgbVcUgi6S3CKE8g0oFU5RIL/OFdQDGkVljFjDQLvXreQmj0QZQvZn1Uij8bTPw+YOEDDv5/R47RlMbX,iv:4Jd1g58fzGb4s/GMAWjfoDQz50pTdDmg5T6Z17iPhnQ=,tag:KNXhhZ3cF9rkn9oyWWdsTQ==,type:str]
+gitlab_terraform_token: ENC[AES256_GCM,data:EUZofxCDAJsDSsp18G0+ZMnjIsgMAg2Jb5o4zM+zwr9atgO3UFu1W72RjIds1GpAxq4UmbhA/+3V,iv:zClPxlylnhfNE8OwtDjvY6fW8sBm+H4aYiQ3vrwZ/AA=,tag:lEjVV+qTIoCjufRmK6mQqw==,type:str]
+sops:
+    age:
+        - enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBkRXFrNCtVVFEwYjhoTFI4
+            NnNGRXIrMHNkQzRzL1pWakk4MWZpN3Jwc1VzClJvVlpsK1pYR1RERXBNdjFYZHZN
+            YXMxNXpOT1UvZldmRzAzbUZCOUgvK1EKLS0tICtUMkZTSkc2OEM4UUt2NGhEZEx6
+            dnl5YUJBVnc3ZzRoVUpQbWZXK2hJeTgKoff/Td6KMCFhdhwmwAIW97IPSvT7recr
+            FerV4Y8imXMPgC5FFzl2CaKtCnuS/1IYsnoejWL+BA6pB6CtUatVtg==
+            -----END AGE ENCRYPTED FILE-----
+          recipient: age1ug8mc4498j6c7a0ymtptu9gxecsk369zn24gx9q5gklrr5w74fjqkf5ug4
+    lastmodified: "2026-05-24T17:50:24Z"
+    mac: ENC[AES256_GCM,data:yTqp3WtKrenca4nwnCvhlijnqkubC0t4lqDvS1UkbGuNgW8tMi532z0KpzlSXziwbNlsu9L+J0rbsJ9+hxpjlWZFo4PyU8+UB6wRHg+AvgsFo3A2w9atd2J4pq7aBbzvKGi3gr3OkU9UedndwsBHlmXzVWG4ZbWk71rjgcPiGk4=,iv:1RIIAFqFYAsgA8djWJLRbbKi0WBNd3qynUuutRlhlkw=,tag:/hxoavURcx3/ipt9eZa2OQ==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.13.1

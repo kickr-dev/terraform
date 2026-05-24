@@ -2,9 +2,9 @@ resource "github_organization_settings" "kickr-dev" {
   name        = "Kickr"
   blog        = "https://kickr.dev"
   description = "Kickr organization. Implement your own project kickstarter or use our own CLI."
-  email       = local.secrets.github.support_email
+  email       = "${local.secrets.git.support_user}@${local.domain}"
 
-  billing_email = local.secrets.github.billing_email
+  billing_email = "${local.secrets.git.billing_user}@${local.domain}"
   location      = "France"
 
   default_repository_permission = "write"

@@ -5,6 +5,8 @@
 #####################################################
 
 locals {
+  domain = "kickr.dev"
+
   branch_name_regex    = "^(alpha|beta|dev|develop|main|next|rc|staging|v[0-9]+(\\.[0-9]+)?\\.x|(chore|docs|feat|fix|kickr|release|renovate)\\/\\S+)$"
   commit_message_regex = ""
 
@@ -103,8 +105,7 @@ locals {
   ]
 
   secrets = {
-    github = yamldecode(data.sops_file.sops["github"].raw)
-    gitlab = yamldecode(data.sops_file.sops["gitlab"].raw)
+    git = yamldecode(data.sops_file.git.raw)
   }
 }
 
@@ -114,9 +115,12 @@ locals {
 #
 #####################################################
 
-data "sops_file" "sops" {
-  for_each = toset(["github", "gitlab"])
+ephemeral "sops_file" "providers" {
+  source_file = "sops.providers.enc.yml"
+  input_type  = "yaml"
+}
 
-  source_file = "sops.${each.value}.enc.yml"
+data "sops_file" "git" {
+  source_file = "sops.git.enc.yml"
   input_type  = "yaml"
 }

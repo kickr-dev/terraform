@@ -156,6 +156,11 @@ resource "gitlab_group_service_account_access_token" "access_tokens" {
       name    = "kickr-renovate[bot]"
       scopes  = ["api", "self_rotate", "write_repository"]
     }
+    terraform = {
+      user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
+      name    = "kickr-terraform-avatar[bot]"
+      scopes  = ["api", "self_rotate"]
+    }
   }
 
   group   = gitlab_group.kickr-dev.id
@@ -177,7 +182,7 @@ resource "gitlab_group_variable" "variables" {
       description = "CodeCov access token for coverage analysis"
       sensitive   = true
       protected   = false
-      value       = local.secrets.gitlab.codecov_token
+      value       = local.secrets.git.codecov_token
     },
     {
       key         = "KICKR_TOKEN"
@@ -222,13 +227,6 @@ resource "gitlab_user_avatar" "tokens" {
         avatar  = "${name}.png"
         token   = token.token
         user_id = token.user_id
-      }
-    },
-    {
-      terraform = {
-        avatar  = "terraform.png"
-        token   = local.secrets.gitlab.terraform_token
-        user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
       }
     }
   ]...)

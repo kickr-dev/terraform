@@ -32,7 +32,7 @@ module "gitlab_project_settings_kickr" {
   protected_branches = ["beta"]
 
   mirror = {
-    token = sensitive(local.secrets.gitlab.github_mirror_token)
+    token = sensitive(local.secrets.git.github_mirror_token)
     url   = module.github_repository_kickr.http_clone_url
   }
 

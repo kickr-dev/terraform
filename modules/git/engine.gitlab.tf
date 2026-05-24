@@ -32,7 +32,7 @@ module "gitlab_project_settings_engine" {
   protected_branches = ["main"]
 
   mirror = {
-    token = sensitive(local.secrets.gitlab.github_mirror_token)
+    token = sensitive(local.secrets.git.github_mirror_token)
     url   = module.github_repository_engine.http_clone_url
   }
 

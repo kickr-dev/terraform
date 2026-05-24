@@ -51,12 +51,6 @@ module "gitlab_project_settings_terraform" {
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"
-      variables = [
-        {
-          key   = "TF_PROD_ENABLED"
-          value = "false"
-        }
-      ]
     }
   ]
 }

@@ -20,7 +20,6 @@ resource "github_repository" "default" {
 
   topics = var.topics
 
-  vulnerability_alerts = var.vulnerability_alerts
   security_and_analysis {
     secret_scanning {
       status = var.secret_scanning
@@ -29,4 +28,9 @@ resource "github_repository" "default" {
       status = var.secret_scanning_push_protection
     }
   }
+}
+
+resource "github_repository_vulnerability_alerts" "default" {
+  repository = github_repository.default.name
+  enabled    = var.vulnerability_alerts
 }

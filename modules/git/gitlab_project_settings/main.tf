@@ -41,7 +41,7 @@ resource "gitlab_project_label" "labels" {
   name        = each.value.name
 }
 
-resource "gitlab_project_mirror" "github" {
+resource "gitlab_project_push_mirror" "github" {
   count   = var.mirror != null ? 1 : 0
   project = var.project
 
@@ -60,6 +60,7 @@ resource "gitlab_pipeline_schedule" "schedules" {
   cron           = each.value.cron
   cron_timezone  = each.value.timezone
   description    = each.value.description
+  inputs         = each.value.inputs
   ref            = each.value.ref
   take_ownership = true
 }

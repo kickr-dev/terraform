@@ -54,9 +54,13 @@ variable "schedules" {
     active      = optional(bool, true)
     cron        = string
     description = string
-    name        = string
-    ref         = string
-    timezone    = optional(string, "Europe/Paris")
+    inputs = optional(list(object({
+      name  = string
+      value = string
+    })), null)
+    name     = string
+    ref      = string
+    timezone = optional(string, "Europe/Paris")
     variables = optional(list(object({
       key   = string
       value = string

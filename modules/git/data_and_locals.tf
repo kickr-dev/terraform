@@ -8,7 +8,7 @@ locals {
   domain = "kickr.dev"
 
   branch_name_regex    = "^(alpha|beta|dev|develop|main|next|rc|staging|v[0-9]+(\\.[0-9]+)?\\.x|(chore|docs|feat|fix|kickr|release|renovate)\\/\\S+)$"
-  commit_message_regex = ""
+  commit_message_regex = "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\(.+\\))?(!)?:\\s.+"
 
   descriptions = {
     kickr    = "Kickr token to create branches and pull requests for kickr layout maintainance purposes"

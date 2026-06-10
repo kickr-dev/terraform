@@ -3,3 +3,5 @@ misconfigurations:
     statement: GitHub repository visibility is expected to be public
   - id: GIT-0004
     statement: All commits cannot be signed (bot specifically), allowing non-signed commits on protected branches
+  - id: GIT-0003
+    statement: GitHub repository should be set to use vulnerability alerts

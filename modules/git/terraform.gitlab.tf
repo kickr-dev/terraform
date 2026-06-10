@@ -3,6 +3,7 @@ module "gitlab_project_terraform" {
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "terraform"
+  avatar       = "${path.module}/avatars/terraform.png"
 
   default_branch   = "main"
   description      = "Kickr terraform resources (GitHub, GitLab, cloud instances)"

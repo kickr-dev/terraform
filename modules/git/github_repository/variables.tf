@@ -1,22 +1,6 @@
-variable "name" {
-  type        = string
-  description = "The name of the repository."
-}
-
 variable "description" {
   type        = string
   description = "A description of the repository."
-}
-
-variable "visibility" {
-  type        = string
-  description = "Can be `public` or `private`. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, visibility can also be `internal`. The `visibility` parameter overrides the `private` parameter."
-}
-
-variable "homepage_url" {
-  type        = string
-  default     = null
-  description = "URL of a page describing the project."
 }
 
 variable "has_discussions" {
@@ -43,16 +27,15 @@ variable "has_wiki" {
   description = "Set to `true` to enable the GitHub Wiki features on the repository."
 }
 
-variable "topics" {
-  type        = set(string)
-  default     = []
-  description = "The list of topics of the repository."
+variable "homepage_url" {
+  type        = string
+  default     = null
+  description = "URL of a page describing the project."
 }
 
-variable "vulnerability_alerts" {
-  type        = bool
-  default     = true
-  description = "Configure Dependabot security alerts for vulnerable dependencies; set to `true` to enable, set to `false` to disable, and leave unset for the default behavior."
+variable "name" {
+  type        = string
+  description = "The name of the repository."
 }
 
 variable "secret_scanning" {
@@ -65,4 +48,21 @@ variable "secret_scanning_push_protection" {
   type        = string
   default     = "enabled"
   description = "Set to `enabled` to enable secret scanning push protection on the repository. Can be `enabled` or `disabled`."
+}
+
+variable "topics" {
+  type        = set(string)
+  default     = []
+  description = "The list of topics of the repository."
+}
+
+variable "visibility" {
+  type        = string
+  description = "Can be `public` or `private`. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, visibility can also be `internal`. The `visibility` parameter overrides the `private` parameter."
+}
+
+variable "vulnerability_alerts" {
+  type        = bool
+  default     = true
+  description = "Configure Dependabot security alerts for vulnerable dependencies; set to `true` to enable, set to `false` to disable, and leave unset for the default behavior."
 }

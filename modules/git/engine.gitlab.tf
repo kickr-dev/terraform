@@ -3,6 +3,7 @@ module "gitlab_project_engine" {
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "engine"
+  avatar       = "${path.module}/avatars/kickr.png"
 
   default_branch   = "main"
   description      = "Kickr engine for those who want to use their own generation schema and templates"

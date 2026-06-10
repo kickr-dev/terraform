@@ -3,10 +3,10 @@ resource "github_actions_environment_secret" "secrets" {
   for_each = merge([
     for env in var.environments : {
       for secret in env.secrets : "${env.environment}:${secret.secret_name}" => {
-        encrypted_value = secret.encrypted_value
         environment     = env.environment
         secret_name     = secret.secret_name
-        plaintext_value = secret.plaintext_value
+        value           = secret.value
+        value_encrypted = secret.value_encrypted
       }
     }
   ]...)
@@ -15,8 +15,8 @@ resource "github_actions_environment_secret" "secrets" {
   repository  = var.repository
   secret_name = each.value.secret_name
 
-  encrypted_value = each.value.encrypted_value
-  plaintext_value = each.value.plaintext_value
+  value           = each.value.value
+  value_encrypted = each.value.value_encrypted
 }
 
 resource "github_actions_environment_variable" "variables" {
@@ -55,16 +55,16 @@ resource "github_actions_repository_permissions" "enabled" {
 resource "github_actions_secret" "secrets" {
   for_each = {
     for secret in var.secrets : secret.secret_name => {
-      encrypted_value = secret.encrypted_value
-      plaintext_value = secret.plaintext_value
+      value_encrypted = secret.value_encrypted
+      value           = secret.value
     }
   }
 
   repository  = var.repository
   secret_name = each.key
 
-  encrypted_value = each.value.encrypted_value
-  plaintext_value = each.value.plaintext_value
+  value           = each.value.value
+  value_encrypted = each.value.value_encrypted
 }
 
 resource "github_actions_variable" "variables" {

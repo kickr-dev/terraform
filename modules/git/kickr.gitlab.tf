@@ -3,6 +3,7 @@ module "gitlab_project_kickr" {
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "kickr"
+  avatar       = "${path.module}/avatars/kickr.png"
 
   default_branch   = "beta"
   description      = "Kickr CLI for easy project kickstart generation"

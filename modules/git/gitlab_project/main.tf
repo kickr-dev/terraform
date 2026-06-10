@@ -6,6 +6,9 @@ resource "gitlab_project" "default" {
   description      = var.description
   visibility_level = var.visibility_level
 
+  avatar      = var.avatar
+  avatar_hash = var.avatar != null ? filesha256(var.avatar) : null
+
   archive_on_destroy      = true
   keep_latest_artifact    = true
   merge_pipelines_enabled = var.merge_pipelines_enabled

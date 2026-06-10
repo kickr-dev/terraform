@@ -4,6 +4,12 @@ variable "actions_disabled" {
   description = "Should GitHub Actions be enabled on this repository."
 }
 
+variable "default_branch" {
+  type        = string
+  default     = "main"
+  description = "The branch (e.g. `main`) to set as the default branch of the repository."
+}
+
 variable "environments" {
   type = list(object({
     environment = string
@@ -14,8 +20,8 @@ variable "environments" {
     secrets = optional(list(object({
       secret_name     = string
       from            = optional(string, null)
-      encrypted_value = optional(string, null)
-      plaintext_value = optional(string, null)
+      value           = optional(string, null)
+      value_encrypted = optional(string, null)
     })), [])
 
     variables = optional(list(object({
@@ -24,13 +30,7 @@ variable "environments" {
     })), [])
   }))
   default     = []
-  description = "List of deployment environments to create on the repository, each with optional secrets (secret_name, plaintext_value, encrypted_value) and variables (variable_name, value)."
-}
-
-variable "default_branch" {
-  type        = string
-  default     = "main"
-  description = "The branch (e.g. `main`) to set as the default branch of the repository."
+  description = "List of deployment environments to create on the repository, each with optional secrets (secret_name, value, value_encrypted) and variables (variable_name, value)."
 }
 
 variable "labels" {
@@ -61,11 +61,11 @@ variable "secrets" {
   type = list(object({
     secret_name     = string
     from            = optional(string, null)
-    encrypted_value = optional(string, null)
-    plaintext_value = optional(string, null)
+    value           = optional(string, null)
+    value_encrypted = optional(string, null)
   }))
   default     = []
-  description = "List of repository-level Actions secrets to create, each with a secret_name and one of plaintext_value or encrypted_value."
+  description = "List of repository-level Actions secrets to create, each with a secret_name and one of value or value_encrypted."
 }
 
 variable "variables" {

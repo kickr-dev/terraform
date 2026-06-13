@@ -3,6 +3,7 @@ module "gitlab_project_renovate" {
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "renovate"
+  avatar       = "${path.module}/avatars/renovate.png"
 
   default_branch   = "main"
   description      = "Renovate repository with shared kickr configurations and sheduled maintainance"

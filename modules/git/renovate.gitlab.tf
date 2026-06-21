@@ -54,7 +54,7 @@ module "gitlab_project_settings_renovate" {
     },
     {
       cron        = local.schedules.renovate
-      description = "Scheduled pipeline for kickr layout updates and Renovate maintainance"
+      description = "Scheduled pipeline for Renovate maintainance"
       name        = "kickr-renovate"
       ref         = "refs/heads/main"
       variables = [

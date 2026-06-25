@@ -14,6 +14,12 @@ resource "gitlab_group" "kickr-dev" {
   avatar      = "${path.module}/avatars/kickr.png"
   avatar_hash = filesha256("${path.module}/avatars/kickr.png")
 
+  membership_lock                          = false
+  mentions_disabled                        = true
+  prevent_forking_outside_group            = false
+  prevent_sharing_groups_outside_hierarchy = true
+  share_with_group_lock                    = true
+
   auto_devops_enabled          = false
   permanently_remove_on_delete = false
   request_access_enabled       = false

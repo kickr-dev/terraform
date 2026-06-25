@@ -28,6 +28,12 @@ variable "labels" {
   description = "List of labels to create in the GitLab project."
 }
 
+variable "merge_access_level" {
+  type        = string
+  default     = "maintainer"
+  description = "Access levels allowed to merge. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+}
+
 variable "mirror" {
   type = object({
     token = string
@@ -41,6 +47,12 @@ variable "mirror" {
 variable "project" {
   type        = string
   description = "The GitLab project ID or full path to configure."
+}
+
+variable "push_access_level" {
+  type        = string
+  default     = "maintainer"
+  description = "Access levels allowed to push. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
 }
 
 variable "protected_branches" {

@@ -116,11 +116,11 @@ locals {
 #####################################################
 
 ephemeral "sops_file" "providers" {
-  source_file = "sops.providers.enc.yml"
+  source_file = "providers.enc.yml"
   input_type  = "yaml"
 }
 
 data "sops_file" "git" {
-  source_file = "sops.git.enc.yml"
+  source_file = "git.enc.yml"
   input_type  = "yaml"
 }

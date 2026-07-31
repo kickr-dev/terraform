@@ -20,5 +20,4 @@ module "github_repository_settings_kickr" {
 
   actions_disabled = true
   labels           = local.labels
-
 }

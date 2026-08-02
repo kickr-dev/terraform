@@ -40,8 +40,8 @@ module "gitlab_project_settings_renovate" {
 
   schedules = [
     {
-      active      = true
-      cron        = local.schedules.kickr
+      active      = local.kickr.active
+      cron        = local.kickr.schedules
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"
@@ -53,7 +53,8 @@ module "gitlab_project_settings_renovate" {
       ]
     },
     {
-      cron        = local.schedules.renovate
+      active      = local.renovate.active
+      cron        = local.renovate.schedules
       description = "Scheduled pipeline for Renovate maintainance"
       name        = "renovate"
       ref         = "refs/heads/main"

@@ -16,14 +16,16 @@ locals {
     renovate = "Renovate token to create branches and pull requests for versions maintainance purposes"
   }
 
-  renovate = {
-    active   = true
-    schedule = "0 12 * * 5"
-  }
+  schedulers = {
+    renovate = {
+      enabled  = true
+      schedule = "0 12 * * 5"
+    }
 
-  kickr = {
-    active   = false
-    schedule = "0 12 * * 6"
+    kickr = {
+      enabled  = true
+      schedule = "0 12 * * 6"
+    }
   }
 
   labels = [

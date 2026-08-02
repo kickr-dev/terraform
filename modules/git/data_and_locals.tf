@@ -18,12 +18,12 @@ locals {
 
   schedulers = {
     renovate = {
-      enabled  = true
+      active   = true
       schedule = "0 12 * * 5"
     }
 
     kickr = {
-      enabled  = true
+      active   = false
       schedule = "0 12 * * 6"
     }
   }

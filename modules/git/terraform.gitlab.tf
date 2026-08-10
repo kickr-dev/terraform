@@ -28,9 +28,11 @@ module "gitlab_project_terraform" {
 }
 
 module "gitlab_project_settings_terraform" {
-  source       = "./gitlab_project_settings"
-  project      = module.gitlab_project_terraform.id
-  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
+  source = "./gitlab_project_settings"
+
+  project            = module.gitlab_project_terraform.id
+  gitlab_token       = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
+  protected_branches = ["main"]
 
   environments = [
     {
@@ -39,7 +41,6 @@ module "gitlab_project_settings_terraform" {
       tier        = "production"
     }
   ]
-  protected_branches = ["main"]
 
   mirror = {
     token = sensitive(local.secrets.git.github_mirror_token)

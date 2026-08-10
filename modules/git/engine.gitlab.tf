@@ -27,10 +27,10 @@ module "gitlab_project_engine" {
 }
 
 module "gitlab_project_settings_engine" {
-  source       = "./gitlab_project_settings"
-  project      = module.gitlab_project_engine.id
-  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
+  source = "./gitlab_project_settings"
 
+  project            = module.gitlab_project_engine.id
+  gitlab_token       = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
   protected_branches = ["main"]
 
   mirror = {

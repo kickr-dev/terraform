@@ -28,8 +28,9 @@ module "gitlab_project_terraform" {
 }
 
 module "gitlab_project_settings_terraform" {
-  source  = "./gitlab_project_settings"
-  project = module.gitlab_project_terraform.id
+  source       = "./gitlab_project_settings"
+  project      = module.gitlab_project_terraform.id
+  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
 
   environments = [
     {

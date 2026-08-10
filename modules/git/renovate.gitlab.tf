@@ -28,8 +28,9 @@ module "gitlab_project_renovate" {
 }
 
 module "gitlab_project_settings_renovate" {
-  source  = "./gitlab_project_settings"
-  project = module.gitlab_project_renovate.id
+  source       = "./gitlab_project_settings"
+  project      = module.gitlab_project_renovate.id
+  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
 
   protected_branches = ["main"]
 

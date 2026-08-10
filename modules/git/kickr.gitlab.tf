@@ -27,8 +27,9 @@ module "gitlab_project_kickr" {
 }
 
 module "gitlab_project_settings_kickr" {
-  source  = "./gitlab_project_settings"
-  project = module.gitlab_project_kickr.id
+  source       = "./gitlab_project_settings"
+  project      = module.gitlab_project_kickr.id
+  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
 
   protected_branches = ["beta"]
 

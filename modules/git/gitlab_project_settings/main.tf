@@ -1,3 +1,7 @@
+data "gitlab_project_labels" "labels" {
+  project = var.project
+}
+
 resource "gitlab_branch_protection" "protections" {
   for_each = var.protected_branches
 
@@ -7,9 +11,9 @@ resource "gitlab_branch_protection" "protections" {
   allow_force_push             = false
   code_owner_approval_required = true
 
-  merge_access_level     = var.merge_access_level
-  push_access_level      = var.push_access_level
-  unprotect_access_level = "maintainer"
+  allowed_to_merge     = [{ access_level = var.merge_access_level }]
+  allowed_to_push      = [{ access_level = var.push_access_level }]
+  allowed_to_unprotect = [{ access_level = "maintainer" }]
 }
 
 resource "gitlab_project_environment" "environments" {
@@ -39,6 +43,27 @@ resource "gitlab_project_label" "labels" {
   color       = each.value.color
   description = each.value.description
   name        = each.value.name
+}
+
+resource "terraform_data" "labels" {
+  for_each = toset([
+    for label in data.gitlab_project_labels.labels.labels :
+    label.name if label.is_project_label && !contains([for l in var.labels : l.name], label.name)
+  ])
+
+  triggers_replace = each.key
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      curl -fsSL -X DELETE \
+        --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+        "https://gitlab.com/api/v4/projects/${var.project}/labels/${each.key}"
+    EOT
+
+    environment = {
+      GITLAB_TOKEN = var.gitlab_token
+    }
+  }
 }
 
 resource "gitlab_project_push_mirror" "github" {

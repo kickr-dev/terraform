@@ -81,6 +81,10 @@ resource "gitlab_group_access_token" "access_tokens" {
   }
 }
 
+data "gitlab_group_labels" "labels" {
+  group = gitlab_group.kickr-dev.id
+}
+
 resource "gitlab_group_label" "labels" {
   for_each = { for label in local.labels : label.name => label }
   group    = gitlab_group.kickr-dev.id
@@ -88,6 +92,27 @@ resource "gitlab_group_label" "labels" {
   color       = each.value.color
   description = each.value.description
   name        = each.value.name
+}
+
+resource "terraform_data" "labels" {
+  for_each = toset([
+    for label in data.gitlab_group_labels.labels.labels :
+    label.name if !contains([for l in local.labels : l.name], label.name)
+  ])
+
+  triggers_replace = each.key
+
+  provisioner "local-exec" {
+    command = <<-EOT
+      curl -fsSL -X DELETE \
+        --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+        "https://gitlab.com/api/v4/groups/${gitlab_group.kickr-dev.id}/labels/${each.key}"
+    EOT
+
+    environment = {
+      GITLAB_TOKEN = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
+    }
+  }
 }
 
 resource "gitlab_group_level_mr_approvals" "approvals" {

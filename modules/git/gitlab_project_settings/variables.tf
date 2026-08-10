@@ -18,6 +18,12 @@ variable "environments" {
   description = "List of environments to create in the GitLab project along with their CI/CD variables."
 }
 
+variable "gitlab_token" {
+  type        = string
+  ephemeral   = true
+  description = "GitLab API token used to prune project labels not declared in `labels`."
+}
+
 variable "labels" {
   type = list(object({
     name        = string

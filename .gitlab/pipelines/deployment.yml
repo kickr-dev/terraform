@@ -5,7 +5,7 @@ include:
 
   # Terraform template
   # https://gitlab.com/to-be-continuous/terraform
-  - remote: https://gitlab.com/to-be-continuous/terraform/-/raw/0408f6e06721e84c915e1ca2e854eeb7cec25450/templates/gitlab-ci-terraform.yml # 9.2.2
+  - remote: https://gitlab.com/to-be-continuous/terraform/-/raw/fef22b89d78f356aeac7b7357fd8e5984d05bbca/templates/gitlab-ci-terraform.yml # 9.4.0
     inputs:
       fmt-enabled: "true"
       gitlab-backend-disabled: "true"
@@ -26,7 +26,7 @@ tf-deploy-modules-git:
     include:
       # Terraform template
       # https://gitlab.com/to-be-continuous/terraform
-      - remote: https://gitlab.com/to-be-continuous/terraform/-/raw/0408f6e06721e84c915e1ca2e854eeb7cec25450/templates/gitlab-ci-terraform.yml # 9.2.2
+      - remote: https://gitlab.com/to-be-continuous/terraform/-/raw/fef22b89d78f356aeac7b7357fd8e5984d05bbca/templates/gitlab-ci-terraform.yml # 9.4.0
         inputs:
           environment-namespace: /modules-git
           gitlab-backend-disabled: "false"

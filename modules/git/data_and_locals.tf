@@ -30,6 +30,11 @@ locals {
 
   labels = [
     {
+      color       = "#C5DEF5"
+      description = "Keep this pull request rebased on its base branch"
+      name        = "auto-rebase"
+    },
+    {
       color       = "#D73A4A"
       description = "Something isn't working"
       name        = "bug"
@@ -80,14 +85,24 @@ locals {
       name        = "kickr"
     },
     {
-      color       = "#B60205"
+      color       = "#E99695"
       description = "A major dependency update"
       name        = "major"
+    },
+    {
+      color       = "#FBCA04"
+      description = "Stop updating this pull request"
+      name        = "pause"
     },
     {
       color       = "#D876E3"
       description = "Further information is requested"
       name        = "question"
+    },
+    {
+      color       = "#1D76DB"
+      description = "Rebase this pull request on its base branch"
+      name        = "rebase"
     },
     {
       color       = "#EDEDED"
@@ -100,9 +115,14 @@ locals {
       name        = "renovate"
     },
     {
-      color       = "#D93F0B"
+      color       = "#C2E0C6"
       description = "Improvements or additions to testcases"
       name        = "test"
+    },
+    {
+      color       = "#B60205"
+      description = "Fixes a security vulnerability in a dependency"
+      name        = "vulnerability"
     },
     {
       color       = "#D4C5F9"

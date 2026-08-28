@@ -70,7 +70,7 @@ module "gitlab_project_settings_renovate" {
 
   variables = [
     {
-      key         = "GITHUB_COM_TOKEN"
+      key         = "RENOVATE_GITHUB_COM_TOKEN"
       description = "GitHub token to retrieve release notes associated with versions updates"
       protected   = true
       raw         = true

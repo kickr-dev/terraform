@@ -45,23 +45,30 @@ resource "gitlab_project_label" "labels" {
   name        = each.value.name
 }
 
-resource "terraform_data" "labels" {
-  for_each = toset([
+locals {
+  stale_labels = [
     for label in data.gitlab_project_labels.labels.labels :
     label.name if label.is_project_label && !contains([for l in var.labels : l.name], label.name)
-  ])
+  ]
+}
 
-  triggers_replace = each.key
+resource "terraform_data" "labels" {
+  triggers_replace = local.stale_labels
 
   provisioner "local-exec" {
     command = <<-EOT
-      curl -fsSL -X DELETE \
-        --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
-        "https://gitlab.com/api/v4/projects/${var.project}/labels/${each.key}"
+      set -euo pipefail
+      for name in $(printf '%s' "$STALE_LABELS" | jq -r '.[]'); do
+        curl -fsSL -X DELETE \
+          --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+          "https://gitlab.com/api/v4/projects/${var.project}/labels/$name"
+      done
     EOT
 
     environment = {
       GITLAB_TOKEN = var.gitlab_token
+      # use an environment variable instead of 'for_each' since on project creation, data is not yet available on plan
+      STALE_LABELS = jsonencode(local.stale_labels)
     }
   }
 }

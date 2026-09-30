@@ -234,7 +234,7 @@ resource "gitlab_group_variable" "variables" {
     },
     {
       key         = "PLUMBER_TOKEN"
-      description = local.descriptions.release
+      description = local.descriptions.plumber
       sensitive   = true
       protected   = true
       value       = gitlab_group_service_account_access_token.access_tokens["plumber"].token

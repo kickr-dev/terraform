@@ -12,6 +12,7 @@ locals {
 
   descriptions = {
     kickr    = "Kickr token to create branches and pull requests for kickr layout maintainance purposes"
+    plumber  = "Plumber token to analyze CICD configuration and ensure Supply Chain is secure"
     release  = "Release token to create releases on GitLab, push commit(s) for version files and comment on issues and pull requests"
     renovate = "Renovate token to create branches and pull requests for versions maintainance purposes"
   }

@@ -233,7 +233,7 @@ resource "gitlab_group_variable" "variables" {
       value       = gitlab_group_service_account_access_token.access_tokens["kickr"].token
     },
     {
-      key         = "PLUMBER_TOKEN"
+      key         = "PLUMBER_GITLAB_TOKEN"
       description = local.descriptions.plumber
       sensitive   = true
       protected   = true

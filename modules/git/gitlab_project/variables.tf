@@ -242,7 +242,7 @@ variable "requirements_access_level" {
 
 variable "security_and_compliance_access_level" {
   type        = string
-  default     = "enabled"
+  default     = "private"
   description = "Set the security and compliance access level. Valid values are `disabled`, `private`, `enabled`."
 
   validation {

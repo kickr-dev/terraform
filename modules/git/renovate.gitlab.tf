@@ -19,7 +19,6 @@ module "gitlab_project_renovate" {
   monitor_access_level                 = "disabled"
   pages_access_level                   = "disabled"
   requirements_access_level            = "disabled"
-  security_and_compliance_access_level = "disabled"
   snippets_access_level                = "disabled"
   wiki_access_level                    = "disabled"
 

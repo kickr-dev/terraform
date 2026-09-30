@@ -131,6 +131,10 @@ resource "gitlab_group_membership" "memberships" {
       user_id      = gitlab_group_service_account.service_accounts["kickr"].service_account_id
       access_level = "developer"
     }
+    plumber = {
+      user_id      = gitlab_group_service_account.service_accounts["plumber"].service_account_id
+      access_level = "maintainer"
+    }
     release = {
       user_id      = gitlab_group_service_account.service_accounts["release"].service_account_id
       access_level = "maintainer"
@@ -160,6 +164,7 @@ resource "gitlab_group_membership" "memberships" {
 resource "gitlab_group_service_account" "service_accounts" {
   for_each = {
     kickr     = { name = "kickr[bot]", username = "kickr.bot" }
+    plumber   = { name = "kickr-plumber[bot]", username = "kickr-dev.plumber.bot" }
     release   = { name = "kickr-release[bot]", username = "kickr-dev.release.bot" }
     renovate  = { name = "kickr-renovate[bot]", username = "kickr-dev.renovate.bot" }
     terraform = { name = "kickr-terraform[bot]", username = "kickr-dev.terraform.bot" }
@@ -192,6 +197,11 @@ resource "gitlab_group_service_account_access_token" "access_tokens" {
       name    = "kickr-terraform-avatar[bot]"
       scopes  = ["api", "self_rotate"]
     }
+    plumber = {
+      user_id = gitlab_group_service_account.service_accounts["plumber"].service_account_id
+      name    = "kickr-plumber[bot]"
+      scopes  = ["read_api", "read_repository", "self_rotate"]
+    }
   }
 
   group   = gitlab_group.kickr-dev.id
@@ -221,6 +231,13 @@ resource "gitlab_group_variable" "variables" {
       sensitive   = true
       protected   = true
       value       = gitlab_group_service_account_access_token.access_tokens["kickr"].token
+    },
+    {
+      key         = "PLUMBER_TOKEN"
+      description = local.descriptions.release
+      sensitive   = true
+      protected   = true
+      value       = gitlab_group_service_account_access_token.access_tokens["plumber"].token
     },
     {
       key         = "RELEASE_TOKEN"

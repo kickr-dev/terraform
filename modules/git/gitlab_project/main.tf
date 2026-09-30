@@ -1,6 +1,7 @@
 resource "gitlab_project" "default" {
   namespace_id = var.namespace_id
   name         = var.name
+  path         = var.name
 
   default_branch   = var.default_branch
   description      = var.description
@@ -42,7 +43,6 @@ resource "gitlab_project" "default" {
   merge_method                                     = "ff"
   only_allow_merge_if_all_discussions_are_resolved = true
   only_allow_merge_if_pipeline_succeeds            = var.only_allow_merge_if_pipeline_succeeds
-  pre_receive_secret_detection_enabled             = true
   printing_merge_request_link_enabled              = true
   remove_source_branch_after_merge                 = true
   squash_option                                    = "never"
@@ -70,4 +70,9 @@ resource "gitlab_project" "default" {
     reject_non_dco_commits  = false
     reject_unsigned_commits = false
   }
+}
+
+resource "gitlab_project_security_settings" "default" {
+  project                        = gitlab_project.default.id
+  secret_push_protection_enabled = true
 }

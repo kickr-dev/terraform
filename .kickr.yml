@@ -7,6 +7,7 @@ exclude:
 gitlab:
   options:
     - kickr
+    - plumber
 license: mit
 maintainers:
   - name: u.kilianpaquier

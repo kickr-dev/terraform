@@ -182,6 +182,11 @@ resource "gitlab_group_service_account_access_token" "access_tokens" {
       name    = "kickr[bot]"
       scopes  = ["api", "self_rotate", "write_repository"]
     }
+    plumber = {
+      user_id = gitlab_group_service_account.service_accounts["plumber"].service_account_id
+      name    = "kickr-plumber[bot]"
+      scopes  = ["api", "read_repository", "self_rotate"]
+    }
     release = {
       user_id = gitlab_group_service_account.service_accounts["release"].service_account_id
       name    = "kickr-renovate[bot]"
@@ -196,11 +201,6 @@ resource "gitlab_group_service_account_access_token" "access_tokens" {
       user_id = gitlab_group_service_account.service_accounts["terraform"].service_account_id
       name    = "kickr-terraform-avatar[bot]"
       scopes  = ["api", "self_rotate"]
-    }
-    plumber = {
-      user_id = gitlab_group_service_account.service_accounts["plumber"].service_account_id
-      name    = "kickr-plumber[bot]"
-      scopes  = ["read_api", "read_repository", "self_rotate"]
     }
   }
 

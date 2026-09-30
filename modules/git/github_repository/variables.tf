@@ -42,12 +42,22 @@ variable "secret_scanning" {
   type        = string
   default     = "enabled"
   description = "Set to `enabled` to enable secret scanning on the repository. Can be `enabled` or `disabled`."
+
+  validation {
+    condition     = contains(["enabled", "disabled"], var.secret_scanning)
+    error_message = "Valid values are `enabled`, `disabled`."
+  }
 }
 
 variable "secret_scanning_push_protection" {
   type        = string
   default     = "enabled"
   description = "Set to `enabled` to enable secret scanning push protection on the repository. Can be `enabled` or `disabled`."
+
+  validation {
+    condition     = contains(["enabled", "disabled"], var.secret_scanning_push_protection)
+    error_message = "Valid values are `enabled`, `disabled`."
+  }
 }
 
 variable "topics" {
@@ -59,6 +69,11 @@ variable "topics" {
 variable "visibility" {
   type        = string
   description = "Can be `public` or `private`. If your organization is associated with an enterprise account using GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+, visibility can also be `internal`. The `visibility` parameter overrides the `private` parameter."
+
+  validation {
+    condition     = contains(["public", "private", "internal"], var.visibility)
+    error_message = "Valid values are `public`, `private`, `internal`."
+  }
 }
 
 variable "vulnerability_alerts" {

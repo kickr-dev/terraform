@@ -2,6 +2,11 @@ variable "analytics_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the analytics access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.analytics_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "avatar" {
@@ -19,6 +24,11 @@ variable "builds_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the builds access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.builds_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "commit_message_regex" {
@@ -30,6 +40,11 @@ variable "container_registry_access_level" {
   type        = string
   default     = "enabled"
   description = "Set visibility of container registry, for this project. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.container_registry_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "default_branch" {
@@ -46,30 +61,55 @@ variable "environments_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the environments access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.environments_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "feature_flags_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the feature flags access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.feature_flags_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "forking_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the forking access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.forking_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "infrastructure_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the infrastructure access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.infrastructure_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "issues_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the issues access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.issues_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "merge_pipelines_enabled" {
@@ -82,6 +122,11 @@ variable "merge_requests_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the merge requests access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.merge_requests_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "merge_trains_enabled" {
@@ -94,18 +139,33 @@ variable "model_experiments_access_level" {
   type        = string
   default     = "enabled"
   description = "Set visibility of machine learning model experiments. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.model_experiments_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "model_registry_access_level" {
   type        = string
   default     = "enabled"
   description = "Set visibility of machine learning model registry. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.model_registry_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "monitor_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the monitor access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.monitor_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "name" {
@@ -134,6 +194,11 @@ variable "pages_access_level" {
   type        = string
   default     = "enabled"
   description = "Enable pages access control. Valid values are `public`, `private`, `enabled`, `disabled`."
+
+  validation {
+    condition     = contains(["public", "private", "enabled", "disabled"], var.pages_access_level)
+    error_message = "Valid values are `public`, `private`, `enabled`, `disabled`."
+  }
 }
 
 variable "public_jobs" {
@@ -146,39 +211,74 @@ variable "releases_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the releases access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.releases_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "repository_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the repository access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.repository_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "requirements_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the requirements access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.requirements_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "security_and_compliance_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the security and compliance access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.security_and_compliance_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "snippets_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the snippets access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.snippets_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }
 
 variable "visibility_level" {
   type        = string
   description = "Set to `public` to create a public project. Valid values are `private`, `internal`, `public`."
+
+  validation {
+    condition     = contains(["private", "internal", "public"], var.visibility_level)
+    error_message = "Valid values are `private`, `internal`, `public`."
+  }
 }
 
 variable "wiki_access_level" {
   type        = string
   default     = "enabled"
   description = "Set the wiki access level. Valid values are `disabled`, `private`, `enabled`."
+
+  validation {
+    condition     = contains(["disabled", "private", "enabled"], var.wiki_access_level)
+    error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
 }

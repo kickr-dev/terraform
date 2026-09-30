@@ -31,6 +31,13 @@ variable "environments" {
   }))
   default     = []
   description = "List of deployment environments to create on the repository, each with optional secrets (secret_name, value, value_encrypted) and variables (variable_name, value)."
+
+  validation {
+    condition = alltrue(flatten([
+      for env in var.environments : [for secret in env.secrets : (secret.value == null) != (secret.value_encrypted == null)]
+    ]))
+    error_message = "Each environment secret must set exactly one of `value` or `value_encrypted`."
+  }
 }
 
 variable "labels" {
@@ -66,6 +73,11 @@ variable "secrets" {
   }))
   default     = []
   description = "List of repository-level Actions secrets to create, each with a secret_name and one of value or value_encrypted."
+
+  validation {
+    condition     = alltrue([for secret in var.secrets : (secret.value == null) != (secret.value_encrypted == null)])
+    error_message = "Each secret must set exactly one of `value` or `value_encrypted`."
+  }
 }
 
 variable "variables" {

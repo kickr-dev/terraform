@@ -73,6 +73,8 @@ resource "gitlab_project" "default" {
 }
 
 resource "gitlab_project_security_settings" "default" {
+  count = var.security_and_compliance_access_level != "disabled" ? 1 : 0
+
   project                        = gitlab_project.default.id
   secret_push_protection_enabled = true
 }

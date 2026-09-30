@@ -16,6 +16,11 @@ variable "environments" {
   }))
   default     = []
   description = "List of environments to create in the GitLab project along with their CI/CD variables."
+
+  validation {
+    condition     = alltrue([for env in var.environments : contains(["production", "staging", "testing", "development", "other"], env.tier)])
+    error_message = "Each environment `tier` must be one of `production`, `staging`, `testing`, `development`, `other`."
+  }
 }
 
 variable "gitlab_token" {
@@ -38,6 +43,11 @@ variable "merge_access_level" {
   type        = string
   default     = "maintainer"
   description = "Access levels allowed to merge. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+
+  validation {
+    condition     = contains(["no one", "developer", "maintainer", "admin"], var.merge_access_level)
+    error_message = "Valid values are `no one`, `developer`, `maintainer`, `admin`."
+  }
 }
 
 variable "mirror" {
@@ -59,6 +69,11 @@ variable "push_access_level" {
   type        = string
   default     = "maintainer"
   description = "Access levels allowed to push. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+
+  validation {
+    condition     = contains(["no one", "developer", "maintainer", "admin"], var.push_access_level)
+    error_message = "Valid values are `no one`, `developer`, `maintainer`, `admin`."
+  }
 }
 
 variable "protected_branches" {

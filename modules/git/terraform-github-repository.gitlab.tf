@@ -1,40 +1,31 @@
-module "gitlab_project_terraform" {
+module "gitlab_project_terraform-github-repository" {
   source       = "./gitlab_project"
   gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
 
   namespace_id = gitlab_group.kickr-dev.id
-  name         = "terraform"
+  name         = "terraform-github-repository"
   avatar       = "${path.module}/avatars/terraform.png"
 
   default_branch     = "main"
   protected_branches = ["main"]
-  description        = "Kickr terraform resources (GitHub, GitLab, cloud instances)"
+  description        = "Terraform module for creating GitHub repositories"
   visibility_level   = "public"
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"
+  environments_access_level       = "disabled"
   feature_flags_access_level      = "disabled"
-  forking_access_level            = "disabled"
-  issues_access_level             = "disabled"
+  infrastructure_access_level     = "disabled"
   model_experiments_access_level  = "disabled"
   model_registry_access_level     = "disabled"
   monitor_access_level            = "disabled"
   pages_access_level              = "disabled"
-  releases_access_level           = "disabled"
   requirements_access_level       = "disabled"
   snippets_access_level           = "disabled"
   wiki_access_level               = "disabled"
 
   branch_name_regex    = local.branch_name_regex
   commit_message_regex = local.commit_message_regex
-
-  environments = [
-    {
-      environment = "production"
-      description = "Terraform production environment (state separation)"
-      tier        = "production"
-    }
-  ]
 
   schedules = [
     {
@@ -45,21 +36,4 @@ module "gitlab_project_terraform" {
       ref         = "refs/heads/main"
     }
   ]
-}
-
-resource "gitlab_project_integration_github" "terraform" {
-  project = module.gitlab_project_terraform.id
-
-  token          = sensitive(local.secrets.git.github_mirror_token)
-  repository_url = module.github_repository_terraform.http_clone_url
-}
-
-resource "gitlab_project_push_mirror" "terraform" {
-  project = module.gitlab_project_terraform.id
-
-  auth_method             = "password"
-  enabled                 = true
-  keep_divergent_refs     = false
-  only_protected_branches = true
-  url                     = "https://mirror:${sensitive(local.secrets.git.github_mirror_token)}@${trimprefix(module.github_repository_terraform.http_clone_url, "https://")}"
 }

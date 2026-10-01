@@ -9,6 +9,12 @@ variable "analytics_access_level" {
   }
 }
 
+variable "archived" {
+  type        = bool
+  default     = false
+  description = "Whether the project is archived."
+}
+
 variable "avatar" {
   type        = string
   default     = null
@@ -57,6 +63,31 @@ variable "description" {
   description = "A description of the project."
 }
 
+variable "environments" {
+  type = list(object({
+    description = string
+    environment = string
+    tier        = string
+
+    external_url = optional(string, null)
+
+    variables = optional(list(object({
+      description = string
+      key         = string
+      raw         = bool
+      sensitive   = bool
+      value       = string
+    })), [])
+  }))
+  default     = []
+  description = "List of environments to create in the GitLab project along with their CI/CD variables."
+
+  validation {
+    condition     = alltrue([for env in var.environments : contains(["production", "staging", "testing", "development", "other"], env.tier)])
+    error_message = "Each environment `tier` must be one of `production`, `staging`, `testing`, `development`, `other`."
+  }
+}
+
 variable "environments_access_level" {
   type        = string
   default     = "enabled"
@@ -90,6 +121,12 @@ variable "forking_access_level" {
   }
 }
 
+variable "gitlab_token" {
+  type        = string
+  ephemeral   = true
+  description = "GitLab API token used to prune project labels not declared in `labels`."
+}
+
 variable "infrastructure_access_level" {
   type        = string
   default     = "enabled"
@@ -109,6 +146,52 @@ variable "issues_access_level" {
   validation {
     condition     = contains(["disabled", "private", "enabled"], var.issues_access_level)
     error_message = "Valid values are `disabled`, `private`, `enabled`."
+  }
+}
+
+variable "labels" {
+  type = list(object({
+    name        = string
+    color       = string
+    description = string
+  }))
+  default     = []
+  description = "List of labels to create in the GitLab project."
+}
+
+variable "members" {
+  type = list(object({
+    username     = string
+    access_level = optional(string, "developer")
+  }))
+  default     = []
+  description = "List of users, by username, to add as members of the GitLab project."
+
+  validation {
+    condition     = alltrue([for member in var.members : contains(["no one", "minimal", "guest", "planner", "reporter", "security_manager", "developer", "maintainer", "owner"], member.access_level)])
+    error_message = "Each member `access_level` must be one of `no one`, `minimal`, `guest`, `planner`, `reporter`, `security_manager`, `developer`, `maintainer`, `owner`."
+  }
+}
+
+variable "merge_access_level" {
+  type        = string
+  default     = "maintainer"
+  description = "Access levels allowed to merge. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+
+  validation {
+    condition     = contains(["no one", "developer", "maintainer", "admin"], var.merge_access_level)
+    error_message = "Valid values are `no one`, `developer`, `maintainer`, `admin`."
+  }
+}
+
+variable "merge_method" {
+  type        = string
+  default     = "ff"
+  description = "Set the merge method. Valid values are `merge`, `rebase_merge`, `ff`."
+
+  validation {
+    condition     = contains(["merge", "rebase_merge", "ff"], var.merge_method)
+    error_message = "Valid values are `merge`, `rebase_merge`, `ff`."
   }
 }
 
@@ -201,10 +284,27 @@ variable "pages_access_level" {
   }
 }
 
+variable "protected_branches" {
+  type        = set(string)
+  default     = []
+  description = "List of branch name patterns to protect in the GitLab project."
+}
+
 variable "public_jobs" {
   type        = bool
   default     = true
   description = "If true, jobs can be viewed by non-project members."
+}
+
+variable "push_access_level" {
+  type        = string
+  default     = "maintainer"
+  description = "Access levels allowed to push. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+
+  validation {
+    condition     = contains(["no one", "developer", "maintainer", "admin"], var.push_access_level)
+    error_message = "Valid values are `no one`, `developer`, `maintainer`, `admin`."
+  }
 }
 
 variable "releases_access_level" {
@@ -240,6 +340,27 @@ variable "requirements_access_level" {
   }
 }
 
+variable "schedules" {
+  type = list(object({
+    active      = optional(bool, true)
+    cron        = string
+    description = string
+    inputs = optional(list(object({
+      name  = string
+      value = string
+    })), null)
+    name     = string
+    ref      = string
+    timezone = optional(string, "Europe/Paris")
+    variables = optional(list(object({
+      key   = string
+      value = string
+    })), [])
+  }))
+  default     = []
+  description = "List of pipeline schedules to create in the GitLab project."
+}
+
 variable "security_and_compliance_access_level" {
   type        = string
   default     = "private"
@@ -260,6 +381,47 @@ variable "snippets_access_level" {
     condition     = contains(["disabled", "private", "enabled"], var.snippets_access_level)
     error_message = "Valid values are `disabled`, `private`, `enabled`."
   }
+}
+
+variable "squash_option" {
+  type        = string
+  default     = "never"
+  description = "Set the squash option. Valid values are `never`, `always`, `default_on`, `default_off`."
+
+  validation {
+    condition     = contains(["never", "always", "default_on", "default_off"], var.squash_option)
+    error_message = "Valid values are `never`, `always`, `default_on`, `default_off`."
+  }
+}
+
+variable "suggestion_commit_message" {
+  type        = string
+  default     = "chore(review): apply suggestion"
+  description = "The commit message used to apply merge request suggestions."
+}
+
+variable "unprotect_access_level" {
+  type        = string
+  default     = "maintainer"
+  description = "Access levels allowed to unprotect. Valid values are: `no one`, `developer`, `maintainer`, `admin`."
+
+  validation {
+    condition     = contains(["no one", "developer", "maintainer", "admin"], var.unprotect_access_level)
+    error_message = "Valid values are `no one`, `developer`, `maintainer`, `admin`."
+  }
+}
+
+variable "variables" {
+  type = list(object({
+    description = string
+    key         = string
+    raw         = bool
+    sensitive   = bool
+    protected   = optional(bool, false)
+    value       = string
+  }))
+  default     = []
+  description = "List of CI/CD variables to create at the GitLab project level."
 }
 
 variable "visibility_level" {

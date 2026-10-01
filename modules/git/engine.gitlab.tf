@@ -1,13 +1,15 @@
 module "gitlab_project_engine" {
-  source = "./gitlab_project"
+  source       = "./gitlab_project"
+  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "engine"
   avatar       = "${path.module}/avatars/kickr.png"
 
-  default_branch   = "main"
-  description      = "Kickr engine for those who want to use their own generation schema and templates"
-  visibility_level = "public"
+  default_branch     = "main"
+  protected_branches = ["main"]
+  description        = "Kickr engine for those who want to use their own generation schema and templates"
+  visibility_level   = "public"
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"
@@ -24,19 +26,6 @@ module "gitlab_project_engine" {
 
   branch_name_regex    = local.branch_name_regex
   commit_message_regex = local.commit_message_regex
-}
-
-module "gitlab_project_settings_engine" {
-  source = "./gitlab_project_settings"
-
-  project            = module.gitlab_project_engine.id
-  gitlab_token       = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
-  protected_branches = ["main"]
-
-  mirror = {
-    token = sensitive(local.secrets.git.github_mirror_token)
-    url   = module.github_repository_engine.http_clone_url
-  }
 
   schedules = [
     {
@@ -47,4 +36,21 @@ module "gitlab_project_settings_engine" {
       ref         = "refs/heads/main"
     }
   ]
+}
+
+resource "gitlab_project_integration_github" "engine" {
+  project = module.gitlab_project_engine.id
+
+  token          = sensitive(local.secrets.git.github_mirror_token)
+  repository_url = module.github_repository_engine.http_clone_url
+}
+
+resource "gitlab_project_push_mirror" "engine" {
+  project = module.gitlab_project_engine.id
+
+  auth_method             = "password"
+  enabled                 = true
+  keep_divergent_refs     = false
+  only_protected_branches = true
+  url                     = "https://mirror:${sensitive(local.secrets.git.github_mirror_token)}@${trimprefix(module.github_repository_engine.http_clone_url, "https://")}"
 }

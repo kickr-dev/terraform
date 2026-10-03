@@ -38,6 +38,7 @@ tf-deploy-modules-git:
           integ-enabled: false
           prod-enabled: true
           project-dir: modules/git
+          publish-enabled: false
           review-enabled: false
           staging-enabled: false
           tflint-disabled: true

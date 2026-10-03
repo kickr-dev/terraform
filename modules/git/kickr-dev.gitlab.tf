@@ -95,7 +95,7 @@ resource "gitlab_group_level_mr_approvals" "approvals" {
 
   allow_author_approval                              = true
   allow_committer_approval                           = true
-  allow_overrides_to_approver_list_per_merge_request = false
+  allow_overrides_to_approver_list_per_merge_request = true
   keep_settings_on_destroy                           = true
   retain_approvals_on_push                           = false
 }

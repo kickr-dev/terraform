@@ -60,5 +60,5 @@ resource "gitlab_project_push_mirror" "terraform" {
   enabled                 = true
   keep_divergent_refs     = false
   only_protected_branches = true
-  url                     = "https://mirror:${sensitive(local.secrets.git.github_mirror_token)}@${trimprefix(module.github_repository_terraform.http_clone_url, "https://")}"
+  url                     = sensitive("https://mirror:${local.secrets.git.github_mirror_token}@${trimprefix(module.github_repository_terraform.http_clone_url, "https://")}")
 }

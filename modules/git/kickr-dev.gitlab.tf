@@ -81,10 +81,6 @@ resource "gitlab_group_access_token" "access_tokens" {
   }
 }
 
-data "gitlab_group_labels" "labels" {
-  group = gitlab_group.kickr-dev.id
-}
-
 resource "gitlab_group_label" "labels" {
   for_each = { for label in local.labels : label.name => label }
   group    = gitlab_group.kickr-dev.id

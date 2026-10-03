@@ -1,6 +1,6 @@
 module "github_repository_terraform" {
   depends_on = [github_organization_settings.kickr-dev]
-  source     = "./github_repository"
+  source     = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
   name = "terraform"
 
@@ -8,6 +8,7 @@ module "github_repository_terraform" {
   protected_branches = [{ name = "main" }]
   description        = "Kickr terraform resources (GitHub, GitLab, cloud instances)"
   visibility         = "public"
+  plan               = local.github_plan
 
   has_issues = false
 

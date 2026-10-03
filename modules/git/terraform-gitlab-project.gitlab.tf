@@ -1,6 +1,5 @@
 module "gitlab_project_terraform-gitlab-project" {
-  source       = "./gitlab_project"
-  gitlab_token = ephemeral.sops_file.providers.data["gitlab_terraform_token"]
+  source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
   namespace_id = gitlab_group.kickr-dev.id
   name         = "terraform-gitlab-project"
@@ -10,6 +9,7 @@ module "gitlab_project_terraform-gitlab-project" {
   protected_branches = ["main"]
   description        = "Terraform module for creating GitLab projects"
   visibility_level   = "public"
+  tier               = local.gitlab_tier
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"
@@ -24,9 +24,6 @@ module "gitlab_project_terraform-gitlab-project" {
   snippets_access_level           = "disabled"
   wiki_access_level               = "disabled"
 
-  branch_name_regex    = local.branch_name_regex
-  commit_message_regex = local.commit_message_regex
-
   schedules = [
     {
       active      = local.schedulers.kickr.active
@@ -34,6 +31,7 @@ module "gitlab_project_terraform-gitlab-project" {
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"
+      timezone    = local.timezone
     }
   ]
 }

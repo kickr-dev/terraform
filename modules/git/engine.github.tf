@@ -1,6 +1,6 @@
 module "github_repository_engine" {
   depends_on = [github_organization_settings.kickr-dev]
-  source     = "./github_repository"
+  source     = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
   name = "engine"
 
@@ -8,6 +8,7 @@ module "github_repository_engine" {
   protected_branches = [{ name = "main" }]
   description        = "Kickr engine for those who want to use their own generation schema and templates"
   visibility         = "public"
+  plan               = local.github_plan
 
   has_discussions = true
   topics          = ["golang", "golang-library", "layout", "repository-tools", "templates"]

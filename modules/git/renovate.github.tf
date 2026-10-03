@@ -1,6 +1,6 @@
 module "github_repository_renovate" {
   depends_on = [github_organization_settings.kickr-dev]
-  source     = "./github_repository"
+  source     = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
   name = "renovate"
 
@@ -8,6 +8,7 @@ module "github_repository_renovate" {
   protected_branches = [{ name = "main" }]
   description        = "Renovate repository with shared kickr configurations"
   visibility         = "public"
+  plan               = local.github_plan
 
   topics = ["renovate", "renovate-configs", "shared-configuration"]
 

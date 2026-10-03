@@ -1,17 +1,17 @@
 terraform {
-  required_version = ">= 0.14.0"
+  required_version = ">= 1.10.0"
 
   backend "http" {}
 
   required_providers {
     github = {
       source  = "integrations/github"
-      version = "< 7.0.0"
+      version = ">= 6.12.0, < 7.0.0"
     }
 
     gitlab = {
       source  = "gitlabhq/gitlab"
-      version = "< 20.0.0"
+      version = ">= 19.4.0, < 20.0.0"
     }
 
     sops = {

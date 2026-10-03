@@ -4,13 +4,13 @@ module "github_repository_kickr" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
-  name = "kickr"
+  description = "Kickr CLI for easy project kickstart generation"
+  name        = "kickr"
+  plan        = local.github_plan
+  visibility  = "public"
 
   default_branch     = "beta"
   protected_branches = [{ name = "beta" }]
-  description        = "Kickr CLI for easy project kickstart generation"
-  visibility         = "public"
-  plan               = local.github_plan
 
   has_discussions = true
   topics          = ["generator", "golang", "layout", "repository-tools", "templates"]

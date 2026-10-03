@@ -9,7 +9,6 @@ locals {
 
   github_plan = "free"
   gitlab_tier = "ultimate"
-  timezone    = "Europe/Paris"
 
   branch_name_regex    = "^(alpha|beta|dev|develop|main|next|rc|staging|v[0-9]+(\\.[0-9]+)?\\.x|(chore|docs|feat|fix|kickr|release|renovate)\\/\\S+)$"
   commit_message_regex = "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\\(.+\\))?(!)?:\\s.+"
@@ -25,11 +24,13 @@ locals {
     renovate = {
       active   = true
       schedule = "0 12 * * 5"
+      timezone = "Europe/Paris"
     }
 
     kickr = {
       active   = false
       schedule = "0 12 * * 6"
+      timezone = "Europe/Paris"
     }
   }
 

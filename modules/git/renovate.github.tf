@@ -4,13 +4,13 @@ module "github_repository_renovate" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
-  name = "renovate"
+  description = "Renovate repository with shared kickr configurations"
+  name        = "renovate"
+  plan        = local.github_plan
+  visibility  = "public"
 
   default_branch     = "main"
   protected_branches = [{ name = "main" }]
-  description        = "Renovate repository with shared kickr configurations"
-  visibility         = "public"
-  plan               = local.github_plan
 
   topics = ["renovate", "renovate-configs", "shared-configuration"]
 

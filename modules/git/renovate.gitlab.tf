@@ -2,15 +2,15 @@ module "gitlab_project_renovate" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
-  namespace_id = gitlab_group.kickr-dev.id
-  name         = "renovate"
-  avatar       = "${path.module}/avatars/renovate.png"
+  avatar           = "${path.module}/avatars/renovate.png"
+  description      = "Renovate repository with shared kickr configurations and sheduled maintainance"
+  name             = "renovate"
+  namespace_id     = gitlab_group.kickr-dev.id
+  tier             = local.gitlab_tier
+  visibility_level = "public"
 
   default_branch     = "main"
   protected_branches = ["main"]
-  description        = "Renovate repository with shared kickr configurations and sheduled maintainance"
-  visibility_level   = "public"
-  tier               = local.gitlab_tier
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"
@@ -32,7 +32,7 @@ module "gitlab_project_renovate" {
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"
-      timezone    = local.timezone
+      timezone    = local.schedulers.kickr.timezone
       variables   = [{ key = "RENOVATE_DISABLED", value = "true" }]
     },
     {
@@ -41,7 +41,7 @@ module "gitlab_project_renovate" {
       description = "Scheduled pipeline for Renovate maintainance"
       name        = "renovate"
       ref         = "refs/heads/main"
-      timezone    = local.timezone
+      timezone    = local.schedulers.renovate.timezone
       variables   = [{ key = "KICKR_DISABLED", value = "true" }]
     }
   ]

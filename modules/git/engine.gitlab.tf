@@ -2,15 +2,15 @@ module "gitlab_project_engine" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
-  namespace_id = gitlab_group.kickr-dev.id
-  name         = "engine"
-  avatar       = "${path.module}/avatars/kickr.png"
+  avatar           = "${path.module}/avatars/kickr.png"
+  description      = "Kickr engine for those who want to use their own generation schema and templates"
+  name             = "engine"
+  namespace_id     = gitlab_group.kickr-dev.id
+  tier             = local.gitlab_tier
+  visibility_level = "public"
 
   default_branch     = "main"
   protected_branches = ["main"]
-  description        = "Kickr engine for those who want to use their own generation schema and templates"
-  visibility_level   = "public"
-  tier               = local.gitlab_tier
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"
@@ -32,7 +32,7 @@ module "gitlab_project_engine" {
       description = "Scheduled pipeline for kickr layout updates"
       name        = "kickr"
       ref         = "refs/heads/main"
-      timezone    = local.timezone
+      timezone    = local.schedulers.kickr.timezone
     }
   ]
 }

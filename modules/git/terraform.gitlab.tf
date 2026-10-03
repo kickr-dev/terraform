@@ -1,4 +1,5 @@
 module "gitlab_project_terraform" {
+  # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
   namespace_id = gitlab_group.kickr-dev.id

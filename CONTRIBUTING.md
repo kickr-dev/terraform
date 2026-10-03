@@ -18,11 +18,10 @@ Remove the header to opt a file out of regeneration, unless `kickr generate -f` 
 
 ## Development setup
 
-Global commands can be listed with `just` or `just --list`.
-
-Specific modules commands can be listed with `just <module-slug>` or `just --list <module-slug>`
-and run with `just <module-slug>::<command>`,
-or listed and run directly from within each module directory with `just` or `just --list`.
+For repository's modules/git directory, format and validation commands can be run through:
+- `tofu fmt -diff -recursive`
+- `tofu validate`
+- `tflint --recursive`
 
 ## Commit messages
 

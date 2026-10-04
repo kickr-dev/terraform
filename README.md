@@ -16,3 +16,10 @@
 </div>
 
 ---
+
+## License
+
+The [LICENSE](LICENSE) does not cover:
+
+- The kickr brand name, the logos under [brand/](brand) and `modules/git/avatars/kickr.png`, which are all rights reserved.
+- The other images under `modules/git/avatars/`, which belong to their respective owners.

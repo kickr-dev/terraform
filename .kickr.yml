@@ -2,6 +2,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/kickr-dev/kickr/beta/.schemas/kickr.v1.schema.json
 version: 1
 exclude:
+  - code-of-conduct
+  - contributing
   - shell
 gitlab:
   options:

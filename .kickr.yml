@@ -4,6 +4,7 @@ version: 1
 exclude:
   - code-of-conduct
   - contributing
+  - security
   - shell
 gitlab:
   options:

@@ -3,7 +3,7 @@ module "gitlab_project_engine" {
   source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
   avatar           = "${path.module}/avatars/kickr.png"
-  description      = "Kickr engine for those who want to use their own generation schema and templates"
+  description      = "Engine for building project layout generators, from interactive setup to file generation"
   name             = "engine"
   namespace_id     = gitlab_group.kickr-dev.id
   tier             = local.gitlab_tier

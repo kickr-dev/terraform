@@ -4,7 +4,7 @@ module "github_repository_engine" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-github-repository.git?ref=main"
 
-  description = "Kickr engine for those who want to use their own generation schema and templates"
+  description = "Engine for building project layout generators, from interactive setup to file generation"
   name        = "engine"
   plan        = local.github_plan
   visibility  = "public"

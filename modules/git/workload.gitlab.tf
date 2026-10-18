@@ -1,10 +1,10 @@
-module "gitlab_project_workload_chart" {
+module "gitlab_project_workload" {
   # tflint-ignore: terraform_module_pinned_source
   source = "git::https://gitlab.com/kickr-dev/terraform-gitlab-project.git?ref=main"
 
   avatar           = "${path.module}/avatars/helm.png"
   description      = "Helm library chart for rendering workloads and their related Kubernetes resources from values"
-  name             = "workload-chart"
+  name             = "workload"
   namespace_id     = gitlab_group.kickr-dev.id
   tier             = local.gitlab_tier
   visibility_level = "public"

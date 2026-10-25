@@ -13,7 +13,6 @@ module "gitlab_project_workload" {
   protected_branches = ["main"]
 
   analytics_access_level          = "disabled"
-  container_registry_access_level = "disabled"
   environments_access_level       = "disabled"
   feature_flags_access_level      = "disabled"
   infrastructure_access_level     = "disabled"

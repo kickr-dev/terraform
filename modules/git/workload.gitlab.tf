@@ -12,17 +12,17 @@ module "gitlab_project_workload" {
   default_branch     = "main"
   protected_branches = ["main"]
 
-  analytics_access_level          = "disabled"
-  environments_access_level       = "disabled"
-  feature_flags_access_level      = "disabled"
-  infrastructure_access_level     = "disabled"
-  model_experiments_access_level  = "disabled"
-  model_registry_access_level     = "disabled"
-  monitor_access_level            = "disabled"
-  pages_access_level              = "disabled"
-  requirements_access_level       = "disabled"
-  snippets_access_level           = "disabled"
-  wiki_access_level               = "disabled"
+  analytics_access_level         = "disabled"
+  environments_access_level      = "disabled"
+  feature_flags_access_level     = "disabled"
+  infrastructure_access_level    = "disabled"
+  model_experiments_access_level = "disabled"
+  model_registry_access_level    = "disabled"
+  monitor_access_level           = "disabled"
+  pages_access_level             = "disabled"
+  requirements_access_level      = "disabled"
+  snippets_access_level          = "disabled"
+  wiki_access_level              = "disabled"
 
   schedules = [
     {

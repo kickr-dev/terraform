@@ -35,3 +35,20 @@ module "gitlab_project_workload" {
     }
   ]
 }
+
+resource "gitlab_project_integration_github" "workload" {
+  project = module.gitlab_project_workload.id
+
+  token          = sensitive(local.secrets.git.github_mirror_token)
+  repository_url = module.github_repository_workload.http_clone_url
+}
+
+resource "gitlab_project_push_mirror" "workload" {
+  project = module.gitlab_project_workload.id
+
+  auth_method             = "password"
+  enabled                 = true
+  keep_divergent_refs     = false
+  only_protected_branches = true
+  url                     = sensitive("https://mirror:${local.secrets.git.github_mirror_token}@${trimprefix(module.github_repository_workload.http_clone_url, "https://")}")
+}

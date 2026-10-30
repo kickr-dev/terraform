@@ -9,8 +9,8 @@ module "gitlab_project_kickr" {
   tier             = local.gitlab_tier
   visibility_level = "public"
 
-  default_branch     = "beta"
-  protected_branches = ["beta"]
+  default_branch     = "main"
+  protected_branches = ["main"]
 
   analytics_access_level          = "disabled"
   container_registry_access_level = "disabled"

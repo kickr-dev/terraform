@@ -9,8 +9,8 @@ module "github_repository_kickr" {
   plan        = local.github_plan
   visibility  = "public"
 
-  default_branch     = "beta"
-  protected_branches = [{ name = "beta" }]
+  default_branch     = "main"
+  protected_branches = [{ name = "main" }]
 
   has_discussions = true
   topics          = ["generator", "golang", "layout", "repository-tools", "templates"]
